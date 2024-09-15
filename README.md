@@ -16,24 +16,24 @@ How much money do you spend on your children's sports activities each year? How 
 
 
 ### Use of Technology
-- [] HTML - Uses HTML for two pages:
+- [ ] HTML - Uses HTML for two pages:
   1. Home
   2. Login
   3. About Me
-- [] CSS - Application styles that are adaptable to desktop and mobile devices, follow good UX design principles, and emphasize value of website.
-- [] JavaScript: Interactive menu for FAQ page and training schedule.
-- [] React - Provides login, training schedule, training customization, and display trainer feedback.
-- [] Web Service - Backend service for:
+- [ ] CSS - Application styles that are adaptable to desktop and mobile devices, follow good UX design principles, and emphasize value of website.
+- [ ] JavaScript: Interactive menu for FAQ page and training schedule.
+- [ ] React - Provides login, training schedule, training customization, and display trainer feedback.
+- [ ] Web Service - Backend service for:
   - user login
   - reserved trainings
   - display trainer feedback
-- [] Authentication - User account creation and identification
-- [] Database Data/Login - Store the following information:
+- [ ] Authentication - User account creation and identification
+- [ ] Database Data/Login - Store the following information:
   - user/player information (Name, email, phone, age)
   - training date
   - performance evaluation 
-- [] WebSocket Data - As a user books a training, it is added to their upcoming trainings
+- [ ] WebSocket Data - As a user books a training, it is added to their upcoming trainings
 
 ### Design Images
 
-![ALT TEXT](IMAGE LINK)
+![Images of ](IMAGE LINK)
