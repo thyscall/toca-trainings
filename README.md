@@ -36,5 +36,5 @@ How much money do you spend on your children's sports activities each year? How 
 
 ### Design Images
 
-![Home Page Sketch](file:///Users/thys/Desktop/Screen%20Shot%202024-09-14%20at%209.24.29%20PM.png)
+![Home Page Sketch](https://drive.google.com/file/d/18wwYfJ-shmNPMOqQj6_bJAPiiJOAD_jI/view?usp=sharing)
 
