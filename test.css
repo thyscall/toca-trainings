@@ -1,0 +1,111 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient similar to Stripe's page */
+    color: white;
+  }
+  
+  header {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 600;
+  }
+  
+  .cta-buttons a {
+    margin-left: 15px;
+    padding: 8px 16px;
+    border: 1px solid white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .sign-in {
+    background: transparent;
+    color: white;
+  }
+  
+  .contact-sales {
+    background: white;
+    color: #333;
+  }
+  
+  .cta-buttons a:hover {
+    opacity: 0.8;
+  }
+  
+  /* Main Hero Section */
+  .hero-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 40px;
+    height: 100vh;
+    align-items: center;
+  }
+  
+  .hero-text {
+    max-width: 50%;
+  }
+  
+  .hero-text h1 {
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+  
+  .hero-text p {
+    font-size: 1.5rem;
+    margin: 20px 0;
+  }
+  
+  .hero-text form {
+    margin-top: 20px;
+  }
+  
+  .hero-text input[type="email"] {
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .hero-text button {
+    padding: 15px 20px;
+    background-color: white;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .hero-image img {
+    max-width: 450px;
+    border-radius: 10px;
+  }
+  

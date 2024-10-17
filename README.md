@@ -16,8 +16,8 @@ How much money do you spend on your children's sports activities each year? How 
 
 
 ### Use of Technology
-- [ ] HTML - Uses HTML for two pages:
-  1. Home
+- [ ] HTML - Uses HTML for three pages:
+  1. Home 
   2. Login
   3. About Me
 - [ ] CSS - Application styles that are adaptable to desktop and mobile devices, follow good UX design principles, and emphasize value of website.
@@ -31,8 +31,8 @@ How much money do you spend on your children's sports activities each year? How 
 - [ ] Database Data/Login - Store the following information:
   - user/player information (Name, email, phone, age)
   - training date
-  - performance evaluation 
-- [ ] WebSocket Data - As a user books a training, it is added to their upcoming trainings
+  - coaching feedback 
+- [ ] WebSocket Data - As a user completes a training, it is added to their training history
 
 ### Design Images
 
