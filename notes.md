@@ -60,7 +60,7 @@ For loop iterates over a list of values and changes each value one by one.
 document.getElementById('byu').style.color = 'green';
 
 <b>What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?</b><br>
-Opening HTML tags (without <>)
+Opening HTML tags (without <>)<br>
 Paragraph: p<br>
 Ordered List: ol<br>
 Unordered List: ul<br>
@@ -68,9 +68,35 @@ Second Level Heading: h2<br>
 First Level Heading: h1<br>
 Third Level Heading: h3<br>
 
-<b>How do you declare the document type to be html?</b>
+<b>How do you declare the document type to be html?</b><br>
+<!DOCTYPE html>
 
-<b>What is valid javascript syntax for if, else, for, while, switch statements?</b>
+<b>What is valid javascript syntax for if, else, for, while, switch statements?</b><br>
+If/else:<br>
+if (condition) {<br>
+  // code<br>
+} else {<br>
+  // code<br>
+}<br>
+
+for:<br>
+for (let i = 0; i < 10; i++) {<br>
+  // code<br>
+}<br>
+
+while:<br>
+while (condition) {<br>
+  // code<br>
+}<br>
+
+switch:<br>
+switch (value) {<br>
+  case 'a':<br>
+    // code<br>
+    break;<br>
+  default:<br>
+    // code<br>
+}<br>
 
 <b>What is the correct syntax for creating a javascript object?</b>
 
