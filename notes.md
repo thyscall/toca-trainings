@@ -60,12 +60,13 @@ For loop iterates over a list of values and changes each value one by one.
 document.getElementById('byu').style.color = 'green';
 
 <b>What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?</b><br>
-Paragraph: <p><br>
-Ordered List: <ol><br>
-Unordered List: <ul><br>
-Second Level Heading: <h2><br>
-First Level Heading: <h1><br>
-Third Level Heading: <h3><br>
+Opening HTML tags (without <>)
+Paragraph: p<br>
+Ordered List: ol<br>
+Unordered List: ul<br>
+Second Level Heading: h2<br>
+First Level Heading: h1<br>
+Third Level Heading: h3<br>
 
 <b>How do you declare the document type to be html?</b>
 
