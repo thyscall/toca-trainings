@@ -1,47 +1,50 @@
-<b>In the following code, what does the link element do? </b>
+<b>In the following code, what does the link element do? </b><br>
 Link is used to define a relationship between HTML and an external resource. It most often connects HTML to an external CSS file.
 
 
-<b>In the following code,  what does a div tag do?</b>
+<b>In the following code,  what does a div tag do?</b><br>
 The div tag is used to group together other HTML elements. Often used to structure a web page by creating sections. 
 
     
-<b>In the following code, what is the difference between the #title and .grid selector?</b>
+<b>In the following code, what is the difference between the #title and .grid selector?</b><br>
 The title selector targets an element with an ID title. .grid targets elements with the grid class. Hashtag is used for IDs and . is used for classes. IDs should be unique but classes can be used for more than one element. 
 
-<b>In the following code, what is the difference between padding and margin?</b>
+<b>In the following code, what is the difference between padding and margin?</b><br>
 Padding: space between content and its border
 Margin: space between outside of its border and other elements
 
-<b>Given this HTML and this CSS how will the images be displayed using flex?</b>
+<b>Given this HTML and this CSS how will the images be displayed using flex?</b><br>
 Flexbox organizes elements in a flex row or column. Use additional properties to adjust spacing, alignment, etc. 
 
-<b>What does the following padding CSS do?</b>
+<b>What does the following padding CSS do?</b><br>
 First padding px: top and bottom
 Second padding px: left and right
 
-<b>What does the following code using arrow syntax function declaration do?</b>
+<b>What does the following code using arrow syntax function declaration do?</b><br>
 JavaScript arrows: shorthand to define functions, shows what to return
 
-<b>What does the following code using map with an array output?</b>
+<b>What does the following code using map with an array output?</b><br>
 Map method creates a new array by applying a given function to each element of the orginal array. 
 
-<b>What does the following code output using getElementByID and addEventListener?</b>
+<b>What does the following code output using getElementByID and addEventListener?</b><br>
 Read functions. Buttons' function will run when clicked. 
 
-<b>What does the following line of Javascript do using a # selector?</b>
+<b>What does the following line of Javascript do using a # selector?</b><br>
 Hashtag plus an ID indiactes which element to manipulate
 
-<b>Which of the following are true? (mark all that are true about the DOM)</b>
+<b>Which of the following are true? (mark all that are true about the DOM)</b><br>
 DOM means Document Object Model. Acts like a tree of objects. 
 
-<b>By default, the HTML span element has a default CSS display property value of: </b>
+<b>By default, the HTML span element has a default CSS display property value of: </b><br>
 Span is inline by defualt, only takes up as much width as its content. 
 
-<b>How would you use CSS to change all the div elements to have a background color of red?</b>
+<b>How would you use CSS to change all the div elements to have a background color of red?</b><br>
 div then squiggle brackets background-color: red;
 
-<b>How would you display an image with a hyperlink in HTML?</b>
+<b>How would you display an image with a hyperlink in HTML?</b><br>
+<a href=""https://example.com">
+  <img src="image.jpg" alt="Description">
+</a>
 
 <b>In the CSS box model, what is the ordering of the box layers starting at the inside and working out?</b>
 
