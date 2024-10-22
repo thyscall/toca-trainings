@@ -98,30 +98,62 @@ switch (value) {<br>
     // code<br>
 }<br>
 
-<b>What is the correct syntax for creating a javascript object?</b>
+<b>What is the correct syntax for creating a javascript object?</b><br>
+const obj = {<br>
+  key: 'value',<br>
+  anotherKey: 42<br>
+};<br>
 
-<b>Is it possible to add new properties to javascript objects?</b>
+<b>Is it possible to add new properties to javascript objects?</b><br>
+Yes
 
-<b>If you want to include JavaScript on an HTML page, which tag do you use?</b>
+<b>If you want to include JavaScript on an HTML page, which tag do you use?</b><br>
+use the <script> tag
 
-<b>Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?</b>
+<b>Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?</b><br>
+document.getElementById('animal').textContent = 'crow';<br>
 
-<b>Which of the following correctly describes JSON?</b>
+<b>Which of the following correctly describes JSON?</b><br>
+A lightweight data-interchange format that's easy to read and write. used for transferring data between a server and web app. 
 
-<b>What does the console command chmod, pwd, cd, ls, vim, nano, mkdir, mv, rm, man, ssh, ps, wget, sudo  do?</b>
+<b>What does the console command chmod, pwd, cd, ls, vim, nano, mkdir, mv, rm, man, ssh, ps, wget, sudo  do?</b><br>
+chmod: Changes file permissions.<br>
+pwd: Prints the current working directory.<br>
+cd: Changes the directory.<br>
+ls: Lists files in a directory.<br>
+vim/nano: Text editors.<br>
+mkdir: Creates a new directory.<br>
+mv: Moves or renames files.<br>
+rm: Removes files or directories.<br>
+man: Displays the manual for a command.<br>
+ssh: Connects to a remote server via SSH.<br>
+ps: Displays running processes.<br>
+wget: Downloads files from the web.<br>
+sudo: Executes a command as a superuser.<br>
 
-<b>Which of the following console command creates a remote shell session?</b>
+<b>Which of the following console command creates a remote shell session?</b><br>
+ssh
 
-<b>Which of the following is true when the -la parameter is specified for the ls console command?</b>
+<b>Which of the following is true when the -la parameter is specified for the ls console command?</b><br>
+ls -la lists all files and their details. Hidden files are included. 
 
-<b>Which of the following is true for the domain name banana.fruit.bozo.click, which is the top level domain, which is a subdomain, which is a root domain?</b>
+<b>Which of the following is true for the domain name banana.fruit.bozo.click, which is the top level domain, which is a subdomain, which is a root domain?</b><br>
+click is the top-level domain<br>
+bozo is the root domain<br>
+banana.fruit would be the subdomain<br>
 
-<b>Is a web certificate is necessary to use HTTPS.</b>
+<b>Is a web certificate is necessary to use HTTPS.</b><br>
+Yes
 
-<b>Can a DNS A record can point to an IP address or another A record.</b>
+<b>Can a DNS A record can point to an IP address or another A record.</b><br>
+DNS A records point to an IP address, not another A record. 
 
-<b>Port 443, 80, 22 is reserved for which protocol?</b>
+<b>Port 443, 80, 22 is reserved for which protocol?</b><br>
+Port 443: HTTPS.<br>
+Port 80: HTTP.<br>
+Port 22: SSH.<br>
 
-<b>What will the following code using Promises output when executed?</b>
+<b>What will the following code using Promises output when executed?</b><br>
+Promises in JavaScript are used to handle asynchronous operations. Depending on the code provided, it could resolve successfully or fail (rejected), and the output would be logged accordingly.
 
 
