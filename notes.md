@@ -1,3 +1,4 @@
+<h3>Midterm Study Guide</h3>
 <b>In the following code, what does the link element do? </b><br>
 Link is used to define a relationship between HTML and an external resource. It most often connects HTML to an external CSS file.
 
@@ -46,15 +47,25 @@ div then squiggle brackets background-color: red;
   <img src="image.jpg" alt="Description">
 </a>
 
-<b>In the CSS box model, what is the ordering of the box layers starting at the inside and working out?</b>
+<b>In the CSS box model, what is the ordering of the box layers starting at the inside and working out?</b><br>
+From inside: content, padding, border, margin. 
 
-<b>Given the following HTML, what CSS would you use to set the text "trouble" to green and leave the "double" text unaffected?</b>
+<b>Given the following HTML, what CSS would you use to set the text "trouble" to green and leave the "double" text unaffected?</b><br>
+Something in the CSS like: .trouble { color: green; }
 
-<b>What will the following code output when executed using a for loop and console.log?</b>
+<b>What will the following code output when executed using a for loop and console.log?</b><br>
+For loop iterates over a list of values and changes each value one by one. 
 
-<b>How would you use JavaScript to select an element with the id of “byu” and change the text color of that element to green?</b>
+<b>How would you use JavaScript to select an element with the id of “byu” and change the text color of that element to green?</b><br>
+document.getElementById('byu').style.color = 'green';
 
-<b>What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?</b>
+<b>What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?</b><br>
+Paragraph: <p><br>
+Ordered List: <ol><br>
+Unordered List: <ul><br>
+Second Level Heading: <h2><br>
+First Level Heading: <h1><br>
+Third Level Heading: <h3><br>
 
 <b>How do you declare the document type to be html?</b>
 
