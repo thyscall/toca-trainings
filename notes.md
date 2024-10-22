@@ -1,20 +1,34 @@
-In the following code, what does the link element do? 
-<p>
-  "<link>" is used to define a relationship between HTML and an external resource. It most often connects HTML to an external CSS file.
-</p>
+<b>In the following code, what does the link element do? <b>
+Link is used to define a relationship between HTML and an external resource. It most often connects HTML to an external CSS file.
 
-In the following code,  what does a div tag do?
-<p>
-  The div tag "<div>" is used to group together other HTML elements. Often used to structure a web page by creating sections. 
-</p>
+
+<b>In the following code,  what does a div tag do?<b>
+The div tag is used to group together other HTML elements. Often used to structure a web page by creating sections. 
+
     
-In the following code, what is the difference between the #title and .grid selector?
-In the following code, what is the difference between padding and margin?
-Given this HTML and this CSS how will the images be displayed using flex?
-What does the following padding CSS do?
-What does the following code using arrow syntax function declaration do?
-What does the following code using map with an array output?
-What does the following code output using getElementByID and addEventListener?
+<b>In the following code, what is the difference between the #title and .grid selector?<b>
+The title selector targets an element with an ID title. .grid targets elements with the grid class. Hashtag is used for IDs and . is used for classes. IDs should be unique but classes can be used for more than one element. 
+
+<b>In the following code, what is the difference between padding and margin?<b>
+Padding: space between content and its border
+Margin: space between outside of its border and other elements
+
+<b>Given this HTML and this CSS how will the images be displayed using flex?<b>
+Flexbox organizes elements in a flex row or column. Use additional properties to adjust spacing, alignment, etc. 
+
+<b>What does the following padding CSS do?<b>
+First padding px: top and bottom
+Second padding px: left and right
+
+<b>What does the following code using arrow syntax function declaration do?<b>
+JavaScript arrows: shorthand to define functions, shows what to return
+
+<b>What does the following code using map with an array output?<b>
+Map method creates a new array by applying a given function to each element of the orginal array. 
+
+<b>What does the following code output using getElementByID and addEventListener?<b>
+
+
 What does the following line of Javascript do using a # selector?
 Which of the following are true? (mark all that are true about the DOM)
 By default, the HTML span element has a default CSS display property value of: 
