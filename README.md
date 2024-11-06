@@ -61,4 +61,9 @@ How much money do you spend on your children's sports activities each year? How 
 
 ### Startup CSS Assignment Completion
 - Simon CSS deployed to production environment
-- 
+- Properly styled CSS header, footer, and main content body
+- This criterion is linked to a Learning OutcomeProperly styled CSS navigation elements
+- Responsive window resizing
+- Properly styled CSS application elements
+- Properly styled CSS application text content
+- Properly styled CSS application images
