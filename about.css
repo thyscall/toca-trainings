@@ -1,13 +1,21 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: rgb(255, 253, 247);
+    background-color: white;
     color: black;
-    margin: 0;
-    padding: 0;
     max-width: fit-content;
+    text-align: center;
   }
-  
-  .header-one {
+
+body img {
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  color: black;
+  max-width: fit-content;
+  text-align: center;
+  padding: auto;
+}
+
+  header {
     background-color: black;
     color: white;
     padding: 20px;
@@ -17,7 +25,7 @@ body {
 }
 
   .header-two {
-    background-color: white;
+    background-color: black;
     color: black;
     padding: 40px;
     text-align: center;
@@ -36,8 +44,9 @@ body {
   }
   
   .navbar .nav-links a {
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
+    text-align: right;
     margin-right: 10px;
     font-weight: bold;
     font-style: italic;

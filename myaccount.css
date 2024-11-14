@@ -1,12 +1,12 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: rgb(255, 253, 247);
+    background-color: white;
     color: black;
     margin: 0;
     padding: 0;
 }
 
-.header-one {
+header {
     background-color: black;
     color: white;
     padding: 20px;
@@ -19,6 +19,7 @@ body {
     font-size: 24px;
     color: #39a95e;
     margin: 0;
+    font-style: italic;
 }
 
 .navbar .nav-links {

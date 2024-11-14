@@ -1,13 +1,13 @@
 body {
-    font-family: 'Roboto', sans-serif; /* Simple, clean sans-serif font */
-    background-color: rgb(255, 253, 247);
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(255, 255, 255);
     color: black;
     margin: 0;
     padding: 0;
     max-width: fit-content;
   }
   
-  .header-one {
+  header {
     background-color: black;
     color: white;
     padding: 20px;
@@ -23,7 +23,17 @@ body {
     padding: 40px;
     text-align: center;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .header-two p{
+    background-color: white;
+    color: black;
+    padding: 40px;
+    text-align: center;
+    display: flex;
     justify-content: center;
     align-items: center;
     
@@ -34,14 +44,17 @@ body {
     color: #39a95e;
     margin: 10px;
     margin-right: 35px;
+    font-style: italic;
   }
   
   .navbar .nav-links a {
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
-    margin-right: 10px;
+    margin: 10px;
+    margin-right: 25px;
     font-weight: bold;
     font-style: italic;
+    text-align: right;
   }
   
   .navbar .nav-links a:hover {

@@ -1,12 +1,12 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: rgb(255, 253, 247);
+    background-color: white;
     color: black;
     margin: 0;
     padding: 0;
 }
 
-.header-one {
+header {
     background-color: black;
     color: white;
     padding: 20px;
@@ -50,6 +50,7 @@ body {
 
 main {
     padding: 60px 20px; 
+    text-align: center;
 }
 
 main h3 {
