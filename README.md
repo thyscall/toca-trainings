@@ -54,7 +54,7 @@ How much money do you spend on your children's sports activities each year? How 
 - Body, nav, main, header, footer on every page
 - Links between pages in header on every page
 - Text on each page
-- Placeholders for 3rd party service calls on login and myaccount pages
+- Placeholder for 3rd party service calls on about page for Google Maps
 - One or more images included on home and about pages
 - Login placeholder and username display on login page
 - WebSocket data placeholder on myaccount page showing player performance history and assessment
