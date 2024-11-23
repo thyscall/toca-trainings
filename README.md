@@ -67,3 +67,14 @@ How much money do you spend on your children's sports activities each year? How 
 - Properly styled CSS application elements
 - Properly styled CSS application text content
 - Properly styled CSS application images
+
+### Startup React Assignment Completion
+- Simon React deployed to production environment
+- Git commits demonstrate ownership
+- Bundled using Vite
+- Multiple react components that implement or mock all app functionality
+  1. 
+  2. 
+  3. 
+- React router
+- React hooks
