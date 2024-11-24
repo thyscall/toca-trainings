@@ -4,13 +4,16 @@
   "description": "### Elevator Pitch How much money do you spend on your children's sports activities each year? How do you know if your child is progressing? With just under $40B spent annually, the global youth sports industry lacks clear communication. This website is where parents, players, and coaches efficiently understand their progress. Book trainings, coach virtually, and log player progress all in one place.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "give-me-a-joke": "^0.5.1"
+    "react": "^18.3.1",
+    "react-router-dom": "^7.0.1"
   },
   "devDependencies": {
     "vite": "^5.4.11"
