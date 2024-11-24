@@ -1,31 +1,21 @@
-<!DOCTYPE html>
-<!-- TECHNOLOGY USED ON THIS PAGE: Authentication -->
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- Tell browsers not to scale the viewport automatically -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Toca Pro</title>
-    <link rel="stylesheet" href="login.css" />
-  </head>
-  <body>
-    <!-- Use header, main, and footer elements to give semantic structure -->
+import React from "react"
+import "./app.css" 
+
+function login(){
+  return(
+    <div>
     <header>
       <div class="logo"><h3>Toca Pro</h3></div>
         <div class="navbar">
-          <!-- Navigation elements -->
           <nav class="nav-links">
-            <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
-              <a href="index.html">Home</a></li>
-              <a href="login.html">Login</a></li>
-              <a href="about.html">About</a></li>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="login.html">Login</a></li>
+              <li><a href="about.html">About</a></li>
           </nav>
-        </div>
       </div>
     </header>
   <head>
     <meta charset="UTF-8" />
-    <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Toca Trainings</title>
     <link rel="icon" href="favicon.ico" />
@@ -42,7 +32,7 @@
           <span>🔒</span>
           <input type="password" placeholder="password" />
         </div>
-        <button type="submit"><a href="myaccount.html">Login</a></button>   <!-- Authentication Here -->
+        <button type="submit"><a href="myaccount.html">Login</a></button>
         <button type="submit">Sign Up</button>
       </form>
     </main>
@@ -55,4 +45,6 @@
         <a href="https://github.com/thyscall/web-startup.git">GitHub</a>
       </footer>
   </body>
-</html>
+  </div>
+  )
+}
