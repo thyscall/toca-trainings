@@ -1,8 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import "./about.css";
 
-function About() {
+export default function About() {
   return (
     <div>
       {/* Header */}
@@ -10,30 +9,6 @@ function About() {
         <div className="logo">
           <h3>Toca Pro</h3>
         </div>
-        <nav className="navbar fixed-top navbar-dark">
-          <menu className="navbar-nav">
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/" exact>
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/login">
-                Login
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/about">
-                About
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/myaccount">
-                My Account
-              </NavLink>
-            </li>
-          </menu>
-        </nav>
       </header>
 
       {/* Main Content */}
@@ -87,3 +62,4 @@ function About() {
     </div>
   );
 }
+export { About };
