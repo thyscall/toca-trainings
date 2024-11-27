@@ -4,12 +4,7 @@ import "./myaccount.css";
 export default function MyAccount() {
   return (
     <div>
-      {/* Header */}
-      <header>
-        <div className="logo">
-          <h3>Toca Pro</h3>
-        </div>
-      </header>
+
 
       {/* Main Content */}
       <main>

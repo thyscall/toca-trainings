@@ -12,7 +12,7 @@ export default function About() {
       </header>
 
       {/* Main Content */}
-      <main>
+      <main className="about">
         <h2>About Toca</h2>
         <p>
           Each training with Toca is structured to improve technical ability, individual mentality, and personal growth. My
@@ -33,7 +33,7 @@ export default function About() {
         <h2>About Me</h2>
         <p>
           I started playing soccer at the age of two. I went on to play, watch, and coach soccer almost every day for the next
-          16 years. After thousands of hours of training, I went on to play college soccer and gain an education at Brigham
+          16 years. After thousands of hours of training, I played college soccer and gained an education at Brigham
           Young University. I have been fortunate to be surrounded by incredible players and coaches throughout my career.
         </p>
         <img src="Images/BYU-54_Original.jpg" alt="Thys Call BYU Soccer" width="400" height="500" />

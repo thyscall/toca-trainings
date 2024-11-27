@@ -1,34 +1,26 @@
 import React from "react";
+import { Authenticated } from "./authenticated";
+import { Unauthenticated } from "./unauthenticated";
+import { AuthState } from "./authState";
 import "./login.css";
 
-export default function Login() {
+export default function Login({ userName, authState, onAuthChange }) {
   return (
-    <div>
-      {/* Header */}
-      <header>
-        <div className="logo">
-          <h3>Toca Pro</h3>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main>
-        <h1>Welcome to Toca</h1>
-        <form>
-          <div>
-            <span>@</span>
-            <input type="text" placeholder="username" />
-          </div>
-          <div>
-            <span>🔒</span>
-            <input type="password" placeholder="password" />
-          </div>
-          <button type="submit">Login</button>
-          <button type="button">Sign Up</button>
-        </form>
-      </main>
-
-      {/* Footer */}
+    <main className="container-fluid bg-secondary text-center">
+      <div>
+        {authState !== AuthState.Unknown && <h1>Welcome to Toca</h1>}
+        {authState === AuthState.Authenticated && (<Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
+        )}
+        {authState === AuthState.Unauthenticated && (
+          <Unauthenticated
+            userName={userName}
+            onLogin={(loginUserName) =>
+              onAuthChange(loginUserName, AuthState.Authenticated)
+            }
+          />
+        )}
+      </div>
+    
       <footer>
         <hr />
         <span className="text-reset">Keep up with Toca</span>
@@ -48,7 +40,7 @@ export default function Login() {
           GitHub
         </a>
       </footer>
-    </div>
+    </main>
   );
 }
 export { Login };

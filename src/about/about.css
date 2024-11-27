@@ -43,7 +43,7 @@ body img {
     margin-right: 35px;
   }
   
-  .navbar .nav-links a {
+  .navbar .nav-links {
     color: rgb(255, 255, 255);
     text-decoration: none;
     text-align: right;
@@ -58,15 +58,10 @@ body img {
   
   main {
     padding: 80px;
+    color: rgb(255, 255, 255);
+  }
+  
 
-  }
-  
-  main h2 {
-    font-size: 32px;
-    color: black;
-    text-align: center;
-  }
-  
   main p {
     font-size: 18px;
     line-height: 1.6;
@@ -107,5 +102,12 @@ body img {
       display: block;
       margin: 10px 0;
     }
+
+    .main h2 {
+      font-size: 32px;
+      color: rgb(255, 255, 255);
+      text-align: center;
+    }
+  
   }
   
