@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import "./myaccount.css";
 
@@ -6,7 +7,6 @@ export default function MyAccount() {
     <div>
 
 
-      {/* Main Content */}
       <main>
         <h1>Welcome back to Toca</h1>
         <h2>User Training History</h2>
@@ -61,16 +61,16 @@ export default function MyAccount() {
         </form>
         <div className="chart-container">
           <canvas id="improvementChart"></canvas>
-        </div>
+        
         <img
           src="Images/LineChart.png"
           alt="Player Progression"
           width="500"
           height="300"
         />
+        </div>
       </main>
 
-      {/* Footer */}
       <footer>
         <hr />
         <span className="text-reset">Keep up with Toca</span>
@@ -94,3 +94,43 @@ export default function MyAccount() {
   );
 }
 export { MyAccount };
+*/
+
+
+import React from "react";
+import "./myaccount.css";
+
+export function MyAccount() {
+  const trainingHistory = JSON.parse(localStorage.getItem("trainingHistory")) || [
+    { date: "2024-11-22", focus: "Ball Control", type: "Private", duration: "60 mins", feedback: "Good focus, improve accuracy." },
+    { date: "2024-11-23", focus: "Finishing", type: "Group", duration: "75 mins", feedback: "Excellent timing, work on power." },
+  ];
+
+  const rows = trainingHistory.map((entry, index) => (
+    <tr key={index}>
+      <td>{entry.date}</td>
+      <td>{entry.focus}</td>
+      <td>{entry.type}</td>
+      <td>{entry.duration}</td>
+      <td>{entry.feedback}</td>
+    </tr>
+  ));
+
+  return (
+    <main className="container-fluid">
+      <h1>My Training History</h1>
+      <table className="training-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Focus</th>
+            <th>Type</th>
+            <th>Duration</th>
+            <th>Feedback</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    </main>
+  );
+}

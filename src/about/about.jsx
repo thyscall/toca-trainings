@@ -6,9 +6,6 @@ export default function About() {
     <div>
       {/* Header */}
       <header>
-        <div className="logo">
-          <h3>Toca Pro</h3>
-        </div>
       </header>
 
       {/* Main Content */}
@@ -19,6 +16,15 @@ export default function About() {
           players will be the first to tell you that I match their commitment: any time, any place, any condition. These are the
           trainings I wish I had early on in my career.
         </p>
+
+        {/* Inspirational Quote Section */}
+        <div className="quote-box">
+          <blockquote className="quote">
+            "Success is no accident. It is hard work, perseverance, learning, studying, sacrifice, and most of all, love of what you are doing or learning to do."
+          </blockquote>
+          <p className="author">- Pele</p>
+        </div>
+
         <p>
           Trainings are tailored to each player's goals, skillset, age, competition level, and schedule. Training sessions are
           held at Lakeside Sports Park in Orem, UT. See map below for details.

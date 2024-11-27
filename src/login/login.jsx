@@ -6,7 +6,7 @@ import "./login.css";
 
 export default function Login({ userName, authState, onAuthChange }) {
   return (
-    <main className="container-fluid bg-secondary text-center">
+    <main className="login-page bg-secondary text-center">
       <div>
         {authState !== AuthState.Unknown && <h1>Welcome to Toca</h1>}
         {authState === AuthState.Authenticated && (<Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />

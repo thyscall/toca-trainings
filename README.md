@@ -73,8 +73,8 @@ How much money do you spend on your children's sports activities each year? How 
 - Git commits demonstrate ownership
 - Bundled using Vite
 - Multiple react components that implement or mock all app functionality
-  1. 
-  2. 
-  3. 
+  1. Login component to mock service authentication
+  2. About page random quote placeholder
+  3. User training history table input logic
 - React router
-- React hooks
+- React hooks applied on login.jsx and app.jsx
