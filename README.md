@@ -75,6 +75,6 @@ How much money do you spend on your children's sports activities each year? How 
 - Multiple react components that implement or mock all app functionality
   1. Login component to mock service authentication
   2. About page random quote placeholder
-  3. User training history table input logic
+  3. User training history table input logic on My Account page (must log in first)
 - React router
 - React hooks applied on login.jsx and app.jsx
