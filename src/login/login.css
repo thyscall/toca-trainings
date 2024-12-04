@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: 'Roboto', sans-serif;
     background-color: rgb(255, 255, 255);
     color: black;
@@ -112,4 +112,64 @@ body {
       margin: 10px 0;
     }
   }
-  
+   */
+   body {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.login-page {
+    width: 100vw; /* Full width of the browser */
+    min-height: 100vh; /* Ensure it covers the full height as well */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Optional: for centering content */
+    flex-direction: column; /* Optional: for organizing children vertically */
+    justify-content: space-between; /* Optional: space between main content and footer */
+    align-items: center; /* Optional: horizontally center the content */
+}
+
+main {
+    padding: 80px;
+    text-align: center;
+    flex: 1; /* Allow main content to take up remaining space */
+}
+
+footer {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%; /* Ensure footer spans full width */
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+footer a {
+    color: #39a95e;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .login-page {
+        padding: 20px;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+        color: white;
+    }
+
+    .navbar .nav-links a {
+        display: block;
+        margin: 10px 0;
+    }
+}

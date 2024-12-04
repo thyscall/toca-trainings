@@ -78,3 +78,12 @@ How much money do you spend on your children's sports activities each year? How 
   3. User training history table input logic on My Account page (must log in first)
 - React router
 - React hooks applied on login.jsx and app.jsx
+
+### Startup Service Assignment Completion
+- Simon Service deployed to production environment
+- Git commits demonstrate ownership
+- Create an HTTP service using Node.js and Express
+- Frontend served up using Express static middleware
+- Frontend calls third party service endpoints
+- Backend provides service endpoints
+- Frontend calls your service endpoints

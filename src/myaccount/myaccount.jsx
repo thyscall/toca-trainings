@@ -117,20 +117,44 @@ export function MyAccount() {
   ));
 
   return (
-    <main className="container-fluid">
-      <h1>My Training History</h1>
-      <table className="training-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Focus</th>
-            <th>Type</th>
-            <th>Duration</th>
-            <th>Feedback</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
-    </main>
+    <div>
+      <header>
+      </header>
+
+        <main className="full-width">
+          <h1>My Training History</h1>
+          <table className="training-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Focus</th>
+                <th>Type</th>
+                <th>Duration</th>
+                <th>Feedback</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </table>
+        </main>
+        <footer>
+        <hr />
+        <span className="text-reset">Keep up with Toca</span>
+        <br />
+        <a
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+        <a
+          href="https://github.com/thyscall/web-startup.git"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </footer>
+    </div>
   );
 }
