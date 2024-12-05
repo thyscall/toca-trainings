@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./about.css";
 
 export default function About() {
+
+  const [leagueTable, setLeagueTable] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    const fetchLeagueTable = async () => {
+      try {
+        const response = await fetch("/api/premier-league-standings");
+        if (!response.ok) {
+          throw new Error(`Error fetching standings: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setLeagueTable(data.standings[0].table); // Assume we want the "TOTAL" standings
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeagueTable();
+  }, []);
+
   return (
     <div>
       {/* Header */}
@@ -37,12 +61,49 @@ export default function About() {
         />
 
         <h2>About Me</h2>
+        <img src="Images/BYU-54_Original.jpg" alt="Thys Call BYU Soccer" width="400" height="500" />
         <p>
           I started playing soccer at the age of two. I went on to play, watch, and coach soccer almost every day for the next
           16 years. After thousands of hours of training, I played college soccer and gained an education at Brigham
           Young University. I have been fortunate to be surrounded by incredible players and coaches throughout my career.
+          I am a lifelong Arsenal fan and enjoy keeping up with all of the top leagues across the world, especially the Premier League. 
         </p>
-        <img src="Images/BYU-54_Original.jpg" alt="Thys Call BYU Soccer" width="400" height="500" />
+        <h2>Premier League Table</h2>
+        {loading && <p>Loading standings...</p>}
+        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        {!loading && !error && (
+          <table className="league-table">
+            <thead>
+              <tr>
+                <th>Position</th>
+                <th>Team</th>
+                <th>Played</th>
+                <th>Points</th>
+                <th>Goal Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leagueTable.map((team) => (
+                <tr key={team.team.id}>
+                  <td>{team.position}</td>
+                  <td>
+                    <img
+                      src={team.team.crest}
+                      alt={team.team.name}
+                      width="30"
+                      height="30"
+                      style={{ marginRight: "10px" }}
+                    />
+                    {team.team.name}
+                  </td>
+                  <td>{team.playedGames}</td>
+                  <td>{team.points}</td>
+                  <td>{team.goalDifference}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </main>
 
       {/* Footer */}
