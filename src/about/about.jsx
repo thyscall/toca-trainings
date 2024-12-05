@@ -29,8 +29,7 @@ export default function About() {
   return (
     <div>
       {/* Header */}
-      <header>
-      </header>
+      <header></header>
 
       {/* Main Content */}
       <main className="about">
@@ -111,20 +110,8 @@ export default function About() {
         <hr />
         <span className="text-reset">Keep up with Toca</span>
         <br />
-        <a
-          href="https://www.instagram.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Instagram
-        </a>
-        <a
-          href="https://github.com/thyscall/web-startup.git"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"> Instagram </a>
+        <a href="https://github.com/thyscall/web-startup.git" target="_blank" rel="noopener noreferrer">GitHub</a>
       </footer>
     </div>
   );
