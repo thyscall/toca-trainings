@@ -84,6 +84,6 @@ How much money do you spend on your children's sports activities each year? How 
 - Git commits demonstrate ownership
 - Create an HTTP service using Node.js and Express
 - Frontend served up using Express static middleware
-- Frontend calls third party service endpoints
+- Frontend calls third party service endpoints: Premier League Table on About page
 - Backend provides service endpoints
 - Frontend calls your service endpoints
