@@ -1,102 +1,107 @@
 const express = require('express');
-const { v4: uuidv4 } = require('uuid');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
+const cors = require('cors');
+const { getUser, getUserByToken, createUser, getPremierLeagueStandings } = require('./database.js');
+const apiConfig = require('./apiConfig.json'); 
+
+// App 
 const app = express();
+const port = process.argv[2] || 3000;
+const authCookieName = 'token';
 
-let users = {};
-let trainingHistory = [];
-
-const port = process.argv.length > 2 ? process.argv[2] : 3000;
-
+// Middleware
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors());
+app.use(express.static('public')); // Serve frontend files
+app.set('trust proxy', true);
 
-app.use(express.static('public'));
+// Router endpoints
+const apiRouter = express.Router();
+app.use('/api', apiRouter);
 
-// Router for service endpoints
-var apiRouter = express.Router();
-app.use(`/api`, apiRouter);
-
-// CreateAuth a new user
+// Create new user
 apiRouter.post('/auth/create', async (req, res) => {
-  const user = users[req.body.email];
-  if (user) {
-    res.status(409).send({ msg: 'Existing user' });
-  } else {
-    const newUser = { email: req.body.email, password: req.body.password, token: uuidv4() };
-    users[req.body.email] = newUser;
+  const { email, password } = req.body;
+  try {
+    if (await getUser(email)) {
+      return res.status(409).json({ msg: 'User already exists' });
+    }
 
-    res.send({ token: newUser.token });
+    const user = await createUser(email, password);
+    setAuthCookie(res, user.token);
+    res.status(201).json({ id: user._id });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error creating user', error: error.message });
   }
 });
 
-// GetAuth login an existing user
+// Login existing user
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = users[req.body.email];
-  if (user) {
-    if (req.body.password === user.password) {
-      user.token = uuidv4();
-      res.send({ token: user.token });
-      return;
+  const { email, password } = req.body;
+  try {
+    const user = await getUser(email);
+    if (user && (await bcrypt.compare(password, user.password))) {
+      setAuthCookie(res, user.token);
+      res.status(200).json({ id: user._id });
+    } else {
+      res.status(401).json({ msg: 'Unauthorized' });
     }
-  }
-  res.status(401).send({ msg: 'Unauthorized' });
-});
-
-// DeleteAuth logout a user
-apiRouter.delete('/auth/logout', (req, res) => {
-  const user = Object.values(users).find((u) => u.token === req.body.token);
-  if (user) {
-    delete user.token;
-    res.status(204).end();
-  } else {
-    res.status(401).send({ msg: 'Invalid token' });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error logging in', error: error.message });
   }
 });
 
-// Endpoint to add a training session to the user's history
-apiRouter.post('/training-history', (req, res) => {
-  const { user, sessionDetails } = req.body;
-
-  if (!user || !sessionDetails) {
-    return res.status(400).send({ error: 'Invalid input' });
-  }
-
-  // Add the new training session
-  trainingHistory.push({ user, sessionDetails });
-  res.status(201).send({ message: 'Training session recorded' });
+// Logout a user
+apiRouter.delete('/auth/logout', (_req, res) => {
+  res.clearCookie(authCookieName);
+  res.status(204).end();
 });
 
-// Endpoint retrieve training history
-apiRouter.get('/training-history', (req, res) => {
-  res.send(trainingHistory);
-});
+// Middleware to secure routes
+const secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
 
-// Endpoint to fetch Premier League standings
-apiRouter.get('/premier-league-standings', async (_req, res) => {
-    try {
-      const apiKey = '4a2bbdeb40ba478e82086223d41fcdff'; // Replace with actual API key
-      const response = await fetch('https://api.football-data.org/v4/competitions/PL/standings', {
-        headers: {
-          'X-Auth-Token': apiKey,
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error fetching standings: ${response.statusText}`);
-      }
-  
-      const data = await response.json();
-      res.send(data);
-    } catch (err) {
-      res.status(500).send({ error: err.message });
+secureApiRouter.use(async (req, res, next) => {
+  const authToken = req.cookies[authCookieName];
+  try {
+    const user = await getUserByToken(authToken);
+    if (user) {
+      next();
+    } else {
+      res.status(401).json({ msg: 'Unauthorized' });
     }
-  });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error validating user', error: error.message });
+  }
+});
 
-// Return default page if path is unknown
+// Endpoint to get Premier League standings
+apiRouter.get('/premier-league-standings', async (req, res) => {
+  try {
+    const standings = await getPremierLeagueStandings(apiConfig.premLeagueAPI);
+    res.status(200).json(standings);
+  } catch (error) {
+    res.status(500).json({ msg: 'Error fetching standings', error: error.message });
+  }
+});
+
+// Default route for unknown paths
 app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
+  res.status(404).sendFile('index.html', { root: 'public' });
 });
 
-// Start the server
+// Set the authentication cookie
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
+
+// Start the service
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Service running on port ${port}`);
 });
