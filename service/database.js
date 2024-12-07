@@ -30,10 +30,10 @@ async function getUserByToken(token) {
 }
 
 async function createUser(email, password) {
-  const passwordHash = await bcrypt.hash(password, 10);
-  const user = { email, password: passwordHash, token: uuid.v4() };
-  await userCollection.insertOne(user);
-  return user;
-}
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = { email, password: passwordHash, token: uuid.v4() };
+    await userCollection.insertOne(user);
+    return user;
+    }
 
 module.exports = { getUser, getUserByToken, createUser };

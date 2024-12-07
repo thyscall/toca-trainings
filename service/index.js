@@ -29,15 +29,19 @@ app.use('/api', apiRouter);
 
 // User creation
 apiRouter.post('/auth/create', async (req, res) => {
-  const { email, password } = req.body;
-  if (await getUser(email)) {
-    return res.status(409).json({ msg: 'User already exists' });
-  }
-
-  const user = await createUser(email, password);
-  setAuthCookie(res, user.token);
-  res.status(201).json({ id: user._id });
-});
+    const { email, password } = req.body;
+    try {
+      if (await getUser(email)) {
+        return res.status(409).json({ msg: 'User already exists' });
+      }
+  
+      const user = await createUser(email, password);
+      setAuthCookie(res, user.token); // Optional: Set a cookie for immediate login
+      res.status(201).json({ id: user._id });
+    } catch (error) {
+      res.status(500).json({ msg: 'Error creating user', error: error.message });
+    }
+  });
 
 // User login
 apiRouter.post('/auth/login', async (req, res) => {
