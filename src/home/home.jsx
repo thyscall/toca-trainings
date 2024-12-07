@@ -10,15 +10,15 @@ export default function Home() {
       <main>
       <h3>Why Toca?</h3>
       <p>Enhance your soccer performance through specialized training that emphasizes ball mastery, finishing, decision-making, mental resilience, and personal growth. Our expert coaches are dedicated to developing your skills and fostering a winning mindset, empowering you to achieve your goals on and off the field.</p>
-      <p2>Athletes currently performing at</p2>
-        <header2>
+      <p>Athletes currently performing at</p>
+        <header className="teams">
         <img src="Images/BYUSoccer.jpg" alt="BYU Soccer" width="150" height="150"/>
         <img src="Images/UVU.png" alt="UVU Soccer" width="100" height="100"/>
         <img src="Images/SLCC.jpeg" alt="SLCC Soccer" width="115" height="100"/>
         <img src="Images/SVU.png" alt="SVU Soccer" width="100" height="100"/>
         <img src="Images/Utah Celtic FC.png" alt="Utah Celtic Soccer" width="100" height="100"/>
         <img src="Images/UtahSurf.jpg" alt="Utah Surf Soccer" width="100" height="100"/>
-        </header2>
+        </header>
     </main>
 
       <footer>

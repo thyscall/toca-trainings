@@ -17,25 +17,26 @@ body {
     text-align: center;
   }
 
-  header2 {
+  .teams {
     background-color: white;
     color: black;
     padding: 40px;
     text-align: center;
-    display: flex;
     justify-content: center;
     align-items: center;
-    
+    max-width: max-content;
   }
 
   .header-two p{
     background-color: white;
     color: white;
-    padding: 40px;
+    padding: 0px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: fit-content;
+
     
   }
   

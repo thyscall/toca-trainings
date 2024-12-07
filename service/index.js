@@ -7,7 +7,7 @@ const apiConfig = require('./apiConfig.json');
 
 // App 
 const app = express();
-const port = process.argv[2] || 3000;
+const port = process.argv[2] || 4000;
 const authCookieName = 'token';
 
 // Middleware

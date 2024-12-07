@@ -23,7 +23,7 @@ function App() {
             </div>
             <menu className="navbar-nav">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/" exact>
+                <NavLink className="nav-link" to="/" exact="true">
                   Home
                 </NavLink>
               </li>
@@ -59,7 +59,7 @@ function App() {
           </nav>
         </header>
           <Routes>
-            <Route path="/" element={<Home />} exact />
+            <Route path="/" element={<Home />} exact="true" />
             <Route
             path="/login"
             element={

@@ -2,20 +2,22 @@ import React, { useState, useEffect } from "react";
 import "./about.css";
 
 export default function About() {
-
   const [leagueTable, setLeagueTable] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     const fetchLeagueTable = async () => {
       try {
-        const response = await fetch("/api/premier-league-standings");
+        const response = await fetch("/api/premier-league-standings", {
+          method: "GET",
+          credentials: "include", // Include cookies for authentication
+        });
         if (!response.ok) {
           throw new Error(`Error fetching standings: ${response.statusText}`);
         }
         const data = await response.json();
-        setLeagueTable(data.standings[0].table); // Assume we want the "TOTAL" standings
+        setLeagueTable(data.standings[0]?.table || []); // Handle undefined standings gracefully
       } catch (err) {
         setError(err.message);
       } finally {
@@ -70,7 +72,7 @@ export default function About() {
         <h2>Premier League Table</h2>
         {loading && <p>Loading standings...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
-        {!loading && !error && (
+        {!loading && !error && leagueTable.length > 0 && (
           <table className="league-table">
             <thead>
               <tr>
