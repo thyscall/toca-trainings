@@ -9,17 +9,6 @@ body {
   
   header {
     background-color: black;
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-  }
-
-  .teams {
-    background-color: white;
-    color: black;
     padding: 40px;
     text-align: center;
     justify-content: center;

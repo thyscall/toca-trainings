@@ -1,27 +1,25 @@
 const { MongoClient } = require('mongodb');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
-const config = require('./dbConfig.json'); 
-const apiConfig = require('./apiConfig.json');
+const config = require('./dbConfig.json');
 
-// MongoDB Connection Setup
-const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}/${config.dbName}?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
-const db = client.db('TocaProCluster');
+const db = client.db('web-startup');
 const userCollection = db.collection('user');
+const trainingCollection = db.collection('trainingSessions');
 
+// Test database connection
 (async function testConnection() {
   try {
     await client.connect();
     console.log('Connected to MongoDB');
     await db.command({ ping: 1 });
-  } catch (err) {
-    console.error(`Unable to connect to database: ${err.message}`);
+  } catch (error) {
+    console.error(`Unable to connect to database: ${error.message}`);
     process.exit(1);
   }
 })();
-
-// User Functions
 
 async function getUser(email) {
   return await userCollection.findOne({ email });
@@ -38,27 +36,4 @@ async function createUser(email, password) {
   return user;
 }
 
-// Premier League API Function
-
-async function getPremierLeagueStandings() {
-  const fetch = (await import('node-fetch')).default;
-  const url = `https://api.football-data.org/v2/competitions/PL/standings`;
-  const response = await fetch(url, {
-    headers: { 'X-Auth-Token': apiConfig.premLeagueAPI },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch standings: ${response.statusText}`);
-  }
-
-  const data = await response.json();
-  return data.standings;
-}
-
-// Export Functions
-module.exports = {
-  getUser,
-  getUserByToken,
-  createUser,
-  getPremierLeagueStandings,
-};
+module.exports = { getUser, getUserByToken, createUser };

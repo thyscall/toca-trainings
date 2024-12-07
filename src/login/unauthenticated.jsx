@@ -3,15 +3,32 @@ import React, { useState } from "react";
 export function Unauthenticated({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleLogin = () => {
-    // Call the login function passed as a prop
-    onLogin(email, password);
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("authToken", data.token);
+      onLogin(email); // Pass the username back to the parent
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h2>Login</h2>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <input
         type="email"
         placeholder="Email"

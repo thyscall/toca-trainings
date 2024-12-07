@@ -9,14 +9,28 @@ export default function About() {
   useEffect(() => {
     const fetchLeagueTable = async () => {
       try {
+        const authToken = document.cookie['api'] // separate document.cookie and API. requiring that I am logged in to view the PL Table
+          .split("; ")
+          .find((row) => row.startsWith("token="))
+          ?.split("=")[1];
+
+        if (!authToken) {
+          throw new Error("No authentication token found");
+        }
+
         const response = await fetch("/api/premier-league-standings", {
           method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
           credentials: "include", // Include cookies for authentication
         });
+
         if (!response.ok) {
           throw new Error(`Error fetching standings: ${response.statusText}`);
         }
-        const data = await response.json();
+
+        const data = await response.json(); // parsing the data
         setLeagueTable(data.standings[0]?.table || []); // Handle undefined standings gracefully
       } catch (err) {
         setError(err.message);
@@ -118,4 +132,5 @@ export default function About() {
     </div>
   );
 }
+
 export { About };

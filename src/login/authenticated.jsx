@@ -1,10 +1,12 @@
 import React from "react";
 
-export function Authenticated({ onLogout }) {
+export function Authenticated({ userName, onLogout }) {
   return (
     <div>
-      <h1>Welcome Back!</h1>
-      <button onClick={onLogout}>Logout</button>
+      <h2>Welcome Back, {userName}!</h2>
+      <button className="btn btn-danger" onClick={onLogout}>
+        Logout
+      </button>
     </div>
   );
 }

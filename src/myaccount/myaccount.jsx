@@ -16,8 +16,19 @@ export function MyAccount() {
   useEffect(() => {
     const fetchTrainingHistory = async () => {
       try {
+        const authToken = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("token="))
+          ?.split("=")[1];
+
+        if (!authToken) {
+          throw new Error("No authentication token found");
+        }
+
         const response = await fetch('/api/training-history', {
-          credentials: "include", // Ensures cookies are sent with the request
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
         });
 
         if (!response.ok) {
@@ -25,11 +36,7 @@ export function MyAccount() {
         }
 
         const data = await response.json();
-        if (Array.isArray(data)) {
-          setTrainingHistory(data);
-        } else {
-          setTrainingHistory([]);
-        }
+        setTrainingHistory(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error fetching training history:", err);
         setError(err.message);
@@ -50,12 +57,21 @@ export function MyAccount() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
+      const authToken = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1];
+
+      if (!authToken) {
+        throw new Error("No authentication token found");
+      }
+
       const response = await fetch('/api/training-history', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
         },
-        credentials: "include", // Ensures cookies are sent with the request
         body: JSON.stringify({ sessionDetails: formData }),
       });
 
@@ -63,7 +79,6 @@ export function MyAccount() {
         throw new Error("Failed to save training session");
       }
 
-      // Update training history locally
       const newSession = await response.json();
       setTrainingHistory([...trainingHistory, newSession]);
       setFormData({
@@ -81,8 +96,7 @@ export function MyAccount() {
 
   return (
     <div>
-      <header>
-      </header>
+      <header></header>
       <main className="full-width">
         <h2>Training History</h2>
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
@@ -97,16 +111,15 @@ export function MyAccount() {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(trainingHistory) &&
-              trainingHistory.map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.sessionDetails?.date || entry.date}</td>
-                  <td>{entry.sessionDetails?.focus || entry.focus}</td>
-                  <td>{entry.sessionDetails?.type || entry.type}</td>
-                  <td>{entry.sessionDetails?.duration || entry.duration}</td>
-                  <td>{entry.sessionDetails?.feedback || entry.feedback}</td>
-                </tr>
-              ))}
+            {trainingHistory.map((entry, index) => (
+              <tr key={index}>
+                <td>{entry.sessionDetails?.date || entry.date}</td>
+                <td>{entry.sessionDetails?.focus || entry.focus}</td>
+                <td>{entry.sessionDetails?.type || entry.type}</td>
+                <td>{entry.sessionDetails?.duration || entry.duration}</td>
+                <td>{entry.sessionDetails?.feedback || entry.feedback}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
