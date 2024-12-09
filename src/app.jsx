@@ -4,8 +4,8 @@ import Login from "./login/login"; // Corrected import
 import { About } from "./about/about";
 import { MyAccount } from "./myaccount/myaccount";
 import { AuthState } from "./login/authState";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import "./app.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./home/home";
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/">
+                    <NavLink className="nav-link" to="/login">
                       Logout
                     </NavLink>
                   </li>

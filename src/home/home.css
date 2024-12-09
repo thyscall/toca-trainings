@@ -68,15 +68,13 @@ body {
     margin-bottom: 40px;
   }
 
-  main p2 {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 40px;
-    color: #39a95e;
-  }
+main header {
+  background-color: white;
+  max-width: 100vw;
+}
   
   header img {
-    margin: 25px;
+    margin: 12px;
     border-radius: 5px;
     color: white;
   }

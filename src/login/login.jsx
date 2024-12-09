@@ -46,7 +46,7 @@ export default function Login({ onAuthChange }) {
 
   return (
     <main className="login-page bg-secondary text-center">
-      {authState !== AuthState.Unknown && <h1>Welcome to Toca</h1>}
+      {authState !== AuthState.Unknown && <h1></h1>}
       {authState === AuthState.Authenticated && (
         <Authenticated
           userName={userName}

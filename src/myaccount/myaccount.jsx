@@ -16,35 +16,25 @@ export function MyAccount() {
   useEffect(() => {
     const fetchTrainingHistory = async () => {
       try {
-        const authToken = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("token="))
-          ?.split("=")[1];
-
-        if (!authToken) {
-          throw new Error("No authentication token found");
-        }
-
         const response = await fetch('/api/training-history', {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
+          method: 'GET',
+          credentials: 'include', // Automatically include authentication cookies
         });
 
         if (!response.ok) {
-          throw new Error("Unauthorized or failed to fetch training history");
+          throw new Error('Unauthorized or failed to fetch training history');
         }
 
         const data = await response.json();
         setTrainingHistory(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error("Error fetching training history:", err);
+        console.error('Error fetching training history:', err);
         setError(err.message);
         setTrainingHistory([]);
       }
     };
 
-    fetchTrainingHistory();
+    fetchTrainingHistory(); // Missing call to fetch training history
   }, []);
 
   // Handle form input changes
@@ -57,26 +47,17 @@ export function MyAccount() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const authToken = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1];
-
-      if (!authToken) {
-        throw new Error("No authentication token found");
-      }
-
       const response = await fetch('/api/training-history', {
         method: 'POST',
+        credentials: 'include', // Automatically include authentication cookies
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({ sessionDetails: formData }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save training session");
+        throw new Error('Failed to save training session');
       }
 
       const newSession = await response.json();
@@ -89,7 +70,7 @@ export function MyAccount() {
         feedback: "",
       });
     } catch (err) {
-      console.error("Error saving training session:", err);
+      console.error('Error saving training session:', err);
       setError(err.message);
     }
   };
