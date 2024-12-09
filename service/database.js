@@ -3,49 +3,148 @@ const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const config = require('./dbConfig.json');
 
+// MongoDB connection setup
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   tls: true, // Enable TLS
-  tlsInsecure: false, // Disable certificate validation (use true only for testing self-signed certs)
+  tlsInsecure: false, // Use true for testing self-signed certificates only
 });
-const db = client.db('web-startup');
-const userCollection = db.collection('user');
-const trainingCollection = db.collection('trainingSessions');
 
-// Test database connection
-(async function testConnection() {
+// Connect to the database and collections
+let db, userCollection, trainingCollection;
+
+(async function initializeDatabase() {
   try {
-    await client.connect();
+    await client.connect(); // Establish connection
+    db = client.db('web-startup'); // Name of your database
+    userCollection = db.collection('user'); // Users collection
+    trainingCollection = db.collection('trainingSessions'); // Training sessions collection
     console.log('Connected to MongoDB');
-    await db.command({ ping: 1 });
   } catch (error) {
-    console.error(`Unable to connect to database: ${error.message}`);
-    process.exit(1);
+    console.error(`Database connection error: ${error.message}`);
+    process.exit(1); // Exit the application if the database cannot connect
   }
 })();
 
+// Helper function to hash passwords
+async function hashPassword(password) {
+  return await bcrypt.hash(password, 10);
+}
+
+// User Management
 async function getUser(email) {
-  return await userCollection.findOne({ email });
+  try {
+    return await userCollection.findOne({ email });
+  } catch (error) {
+    console.error('Error fetching user by email:', error.message);
+    throw error;
+  }
 }
 
 async function getUserByToken(token) {
-  return await userCollection.findOne({ token });
+  try {
+    return await userCollection.findOne({ token });
+  } catch (error) {
+    console.error('Error fetching user by token:', error.message);
+    throw error;
+  }
 }
 
 async function createUser(email, password) {
-    const passwordHash = await bcrypt.hash(password, 10);
-    const user = { email, password: passwordHash, token: uuid.v4() };
+  try {
+    const passwordHash = await hashPassword(password);
+    const user = {
+      email,
+      password: passwordHash,
+      token: uuid.v4(), // Generate a unique token for authentication
+    };
     await userCollection.insertOne(user);
     return user;
+  } catch (error) {
+    console.error('Error creating user:', error.message);
+    throw error;
+  }
+}
+
+async function authenticateUser(email, password) {
+  try {
+    const user = await getUser(email);
+    if (!user) {
+      throw new Error('User not found');
     }
 
-    module.exports = {
-      getUser,
-      getUserByToken,
-      createUser,
-      db, // Optional: Export the database connection for direct queries
-      userCollection, // Optional: Export the users collection for advanced queries
-      trainingCollection, // Optional: Export the training collection for training session management
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      throw new Error('Invalid password');
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error authenticating user:', error.message);
+    throw error;
+  }
+}
+
+// Training Session Management
+async function saveTrainingSession(userId, sessionDetails) {
+  try {
+    const session = {
+      userId,
+      ...sessionDetails,
+      createdAt: new Date(),
     };
+    const result = await trainingCollection.insertOne(session);
+    return result.ops[0];
+  } catch (error) {
+    console.error('Error saving training session:', error.message);
+    throw error;
+  }
+}
+
+async function getTrainingHistory(userId) {
+  try {
+    return await trainingCollection.find({ userId }).sort({ createdAt: -1 }).toArray();
+  } catch (error) {
+    console.error('Error fetching training history:', error.message);
+    throw error;
+  }
+}
+
+async function deleteTrainingSession(sessionId, userId) {
+  try {
+    const result = await trainingCollection.deleteOne({ _id: sessionId, userId });
+    return result.deletedCount > 0;
+  } catch (error) {
+    console.error('Error deleting training session:', error.message);
+    throw error;
+  }
+}
+
+async function updateTrainingSession(sessionId, userId, updatedDetails) {
+  try {
+    const result = await trainingCollection.updateOne(
+      { _id: sessionId, userId },
+      { $set: { ...updatedDetails, updatedAt: new Date() } }
+    );
+    return result.matchedCount > 0;
+  } catch (error) {
+    console.error('Error updating training session:', error.message);
+    throw error;
+  }
+}
+
+module.exports = {
+  // User management
+  getUser,
+  getUserByToken,
+  createUser,
+  authenticateUser,
+
+  // Training session management
+  saveTrainingSession,
+  getTrainingHistory,
+  deleteTrainingSession,
+  updateTrainingSession,
+};

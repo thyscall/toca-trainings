@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./home.css";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
         <img src="Images/Utah Celtic FC.png" alt="Utah Celtic Soccer" width="100" height="100"/>
         <img src="Images/UtahSurf.jpg" alt="Utah Surf Soccer" width="100" height="100"/>
         </header>
-    </main>
+      </main>
 
       <footer>
         <hr />

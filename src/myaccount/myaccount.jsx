@@ -11,30 +11,44 @@ export function MyAccount() {
     feedback: "",
   });
   const [error, setError] = useState(null);
+  const [socket, setSocket] = useState(null);
 
-  // Fetch training history
+  // Initialize WebSocket connection
   useEffect(() => {
-    const fetchTrainingHistory = async () => {
+    const protocol = window.location.protocol === "http:" ? "ws" : "wss";
+    const ws = new WebSocket(`ws://localhost:4000/ws`);
+
+    ws.onopen = () => {
+      console.log("Connected to WebSocket");
+      setSocket(ws);
+    };
+
+    ws.onmessage = (event) => {
       try {
-        const response = await fetch('/api/training-history', {
-          method: 'GET',
-          credentials: 'include', // Automatically include authentication cookies
-        });
+        const data = JSON.parse(event.data);
 
-        if (!response.ok) {
-          throw new Error('Unauthorized or failed to fetch training history');
+        if (data.type === "training-session-update") {
+          console.log("New training session update received:", data.sessionDetails);
+          setTrainingHistory((prevHistory) => [...prevHistory, data.sessionDetails]);
         }
-
-        const data = await response.json();
-        setTrainingHistory(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error('Error fetching training history:', err);
-        setError(err.message);
-        setTrainingHistory([]);
+      } catch (error) {
+        console.error("Error parsing WebSocket message:", error);
       }
     };
 
-    fetchTrainingHistory(); // Missing call to fetch training history
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+      setSocket(null);
+    };
+
+    ws.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    // Cleanup WebSocket connection on component unmount
+    return () => {
+      if (ws) ws.close();
+    };
   }, []);
 
   // Handle form input changes
@@ -69,6 +83,16 @@ export function MyAccount() {
         duration: "",
         feedback: "",
       });
+
+      // Send new session to WebSocket for real-time updates
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            type: "new-training-session",
+            sessionDetails: newSession,
+          })
+        );
+      }
     } catch (err) {
       console.error('Error saving training session:', err);
       setError(err.message);
@@ -94,11 +118,11 @@ export function MyAccount() {
           <tbody>
             {trainingHistory.map((entry, index) => (
               <tr key={index}>
-                <td>{entry.sessionDetails?.date || entry.date}</td>
-                <td>{entry.sessionDetails?.focus || entry.focus}</td>
-                <td>{entry.sessionDetails?.type || entry.type}</td>
-                <td>{entry.sessionDetails?.duration || entry.duration}</td>
-                <td>{entry.sessionDetails?.feedback || entry.feedback}</td>
+                <td>{entry.date}</td>
+                <td>{entry.focus}</td>
+                <td>{entry.type}</td>
+                <td>{entry.duration}</td>
+                <td>{entry.feedback}</td>
               </tr>
             ))}
           </tbody>

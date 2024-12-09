@@ -3,6 +3,10 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const { getUser, getUserByToken, createUser } = require('./database.js');
 const apiConfig = require('./apiConfig.json'); 
+const { trainingCollection } = require('./database.js');
+const { peerProxy } = require('./peerProxy');
+
+
 
 const app = express();
 const port = process.argv[2] || 4000;
@@ -13,6 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 app.set('trust proxy', true);
+
 
 // Helper to set authentication cookie
 function setAuthCookie(res, authToken) {
@@ -32,10 +37,10 @@ const secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
-  const authToken = req.cookies[authCookieName];
+  const authToken = req.cookies['token'];
   const user = await getUserByToken(authToken);
   if (user) {
-    req.user = user; // Attach user data
+    req.user = user;
     next();
   } else {
     res.status(401).json({ msg: 'Unauthorized' });
@@ -47,51 +52,26 @@ secureApiRouter.use(async (req, res, next) => {
 let trainingHistory = []; // Temporary in-memory storage (replace with a database)
 
 secureApiRouter.post('/training-history', async (req, res) => {
-    try {
-      const { sessionDetails } = req.body;
-  
-      // Validate session details
-      if (
-        !sessionDetails ||
-        !sessionDetails.date ||
-        !sessionDetails.focus ||
-        !sessionDetails.type ||
-        !sessionDetails.duration ||
-        !sessionDetails.feedback
-      ) {
-        return res.status(400).json({ error: 'Missing required fields' });
-      }
-  
-      // Create a new training session object associated with the user
-      const newSession = {
-        userId: req.user._id, // Associate session with the logged-in user
-        ...sessionDetails,
-      };
-  
-      // Save to the database (replace in-memory array with your database implementation)
-      const savedSession = await trainingCollection.insertOne(newSession); // Replace with DB logic
-  
-      res.status(201).json(savedSession.ops[0]); // Return the created session
-    } catch (error) {
-      console.error('Error saving training session:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
+  try {
+    const newSession = await saveTrainingSession(req.user._id, req.body.sessionDetails);
+    res.status(201).json(newSession);
+  } catch (error) {
+    console.error('Error saving training session:', error.message);
+    res.status(500).json({ error: 'Failed to save training session' });
+  }
+});
+
 
 // GET endpoint for training history
 secureApiRouter.get('/training-history', async (req, res) => {
-    try {
-      // Fetch entries for the authenticated user
-      const userEntries = await trainingCollection
-        .find({ userId: req.user._id })
-        .toArray(); 
-  
-      res.status(200).json(userEntries);
-    } catch (error) {
-      console.error('Error fetching training history:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
+  try {
+    const userEntries = await trainingCollection.find({ userId: req.user._id }).toArray();
+    res.status(200).json(userEntries);
+  } catch (error) {
+    console.error('Error fetching training history:', error);
+    res.status(500).json({ error: 'Failed to fetch training history' });
+  }
+});
   
 
 // User creation
@@ -110,17 +90,30 @@ apiRouter.post('/auth/create', async (req, res) => {
     }
   });
 
+// Verify authentication
+apiRouter.get('/auth/verify', async (req, res) => {
+  const authToken = req.cookies['token'];
+  const user = await getUserByToken(authToken);
+  if (user) {
+    res.status(200).json({ authenticated: true, email: user.email });
+  } else {
+    res.status(401).json({ authenticated: false });
+  }
+});
+
 // User login
 apiRouter.post('/auth/login', async (req, res) => {
   const { email, password } = req.body;
-  const user = await getUser(email);
-  if (user && await bcrypt.compare(password, user.password)) {
-    setAuthCookie(res, user.token);
-    res.status(200).json({ id: user._id });
-  } else {
-    res.status(401).json({ msg: 'Unauthorized' });
+  try {
+    const user = await authenticateUser(email, password);
+    res.cookie('token', user.token, { httpOnly: true, secure: true });
+    res.status(200).json({ id: user._id, email: user.email });
+  } catch (error) {
+    console.error('Login error:', error.message);
+    res.status(401).json({ error: 'Invalid email or password' });
   }
 });
+
 
 // User logout
 apiRouter.delete('/auth/logout', (_req, res) => {
@@ -130,15 +123,15 @@ apiRouter.delete('/auth/logout', (_req, res) => {
 
 
 // Get training history
-secureApiRouter.get('/training-history', (req, res) => {
-    try {
-      // Respond with all saved training sessions
-      res.status(200).json(trainingHistory);
-    } catch (error) {
-      console.error('Error fetching training history:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
+secureApiRouter.get('/training-history', async (req, res) => {
+  try {
+    const userEntries = await trainingCollection.find({ userId: req.user._id }).toArray();
+    res.status(200).json(userEntries);
+  } catch (error) {
+    console.error('Error fetching training history:', error);
+    res.status(500).json({ error: 'Failed to fetch training history' });
+  }
+});
   
 
 // WORKING DO NOT TOUCH
@@ -167,7 +160,13 @@ secureApiRouter.get('/user-info', (req, res) => {
   res.json({ email: req.user.email, id: req.user._id });
 });
 
-// Start service
-app.listen(port, () => {
+// Start HTTP server
+const httpServer = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// Attach WebSocket proxy
+peerProxy(httpServer);
+
+
+
