@@ -78,13 +78,13 @@ secureApiRouter.post('/training-history', async (req, res) => {
     }
   });
 
-// Optional: Add a GET endpoint for training history
+// GET endpoint for training history
 secureApiRouter.get('/training-history', async (req, res) => {
     try {
       // Fetch entries for the authenticated user
       const userEntries = await trainingCollection
         .find({ userId: req.user._id })
-        .toArray(); // Replace with your database logic
+        .toArray(); 
   
       res.status(200).json(userEntries);
     } catch (error) {
