@@ -96,3 +96,12 @@ How much money do you spend on your children's sports activities each year? How 
 - Stores application data in MongoDB
 - Stores and retrieves credentials in MongoDB
 - Restricts application functionality based upon authentification
+
+### Startup WebSocket Assignment Completion 
+- Simon WebSocket deployed to production environment
+- Git commits demonstrate ownership
+- Backend listens for WebSocket connection
+- Frontend makes WebSocket connection
+- Data sent over WebSocket connection
+- WebSocket data displayed in the application interface
+- All visible elements are working

@@ -3,8 +3,8 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const { getUser, getUserByToken, createUser, authenticateUser, saveTrainingSession } = require('./database.js');
 const apiConfig = require('./apiConfig.json'); 
-const { trainingCollection } = require('./database.js');
-const { peerProxy } = require('./peerProxy');
+// const { trainingCollection } = require('./database.js');
+// const { peerProxy } = require('./peerProxy');
 
 
 
@@ -28,25 +28,80 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-// Initialize routers
+// // Broadcast login event via WebSocket
+// function broadcastLoginEvent(user) {
+//   const message = JSON.stringify({
+//     type: 'user-login',
+//     message: `${user.email} is training with Toca.`,
+//   });
+
+//   peerProxy.broadcastMessage(message); // Utilize the broadcastMessage function
+// }
+
+// routers
 const apiRouter = express.Router();
 app.use('/api', apiRouter);
 
-// User login
+// User login endpoint
 apiRouter.post('/auth/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await authenticateUser(email, password);
-    const token = user.token; // Ensure token is generated in the database logic.
-    
+    const token = user.token;
+
     // Set the authentication cookie
     setAuthCookie(res, token);
 
-    res.status(200).json({ token, email: user.email }); // Confirm token is sent to the frontend.
+    // // Broadcast WebSocket message
+    // broadcastLoginEvent(user);
+
+    res.status(200).json({ token, email: user.email });
   } catch (error) {
     console.error('Login error:', error.message);
     res.status(401).json({ error: 'Invalid email or password' });
   }
+});
+
+
+// Verify Authentication
+apiRouter.get('/auth/verify', async (req, res) => {
+  const authToken = req.cookies[authCookieName];
+  try {
+    const user = await getUserByToken(authToken);
+    if (user) {
+      res.status(200).json({ authenticated: true, email: user.email });
+    } else {
+      res.status(401).json({ authenticated: false });
+    }
+  } catch (error) {
+    console.error('Verification error:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+// User creation endpoint
+apiRouter.post('/auth/create', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (await getUser(email)) {
+      return res.status(409).json({ msg: 'User already exists' });
+    }
+
+    const user = await createUser(email, password);
+    setAuthCookie(res, user.token); // Set a cookie for immediate login
+    res.status(201).json({ id: user._id, token: user.token }); // Include the token
+  } catch (error) {
+    console.error('Error creating user:', error.message);
+    res.status(500).json({ msg: 'Error creating user' });
+  }
+});
+
+
+// User logout endpoint
+apiRouter.delete('/auth/logout', (_req, res) => {
+  res.clearCookie(authCookieName);
+  res.status(204).end();
 });
 
 // Secure middleware
@@ -55,89 +110,51 @@ apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
   const authToken = req.cookies['token'];
-  const user = await getUserByToken(authToken);
-  if (user) {
-    req.user = user;
-    next();
-  } else {
-    res.status(401).json({ msg: 'Unauthorized' });
+  try {
+    const user = await getUserByToken(authToken);
+    if (user) {
+      req.user = user; // Attach user to request
+      next();
+    } else {
+      res.status(401).json({ msg: 'Unauthorized' });
+    }
+  } catch (error) {
+    console.error('Token validation error:', error.message);
+    res.status(500).json({ msg: 'Server error during authentication' });
   }
 });
 
-// Training history
-// Add the training history code here
-let trainingHistory = []; // Temporary in-memory storage (replace with a database)
 
+// Save Training Session
 secureApiRouter.post('/training-history', async (req, res) => {
   try {
-    const newSession = await saveTrainingSession(req.user._id, req.body.sessionDetails); // define saveTrainingSession
-    res.status(201).json(newSession);
+    const user = req.user; 
+    const { sessionDetails } = req.body; 
+
+    if (!sessionDetails) {
+      return res.status(400).json({ msg: 'Missing session details' });
+    }
+
+    const newSession = await saveTrainingSession(user._id, sessionDetails);
+
+    res.status(201).json(newSession); 
   } catch (error) {
     console.error('Error saving training session:', error.message);
     res.status(500).json({ error: 'Failed to save training session' });
   }
 });
 
-
-// GET endpoint for training history
-secureApiRouter.get('/training-history', async (req, res) => {
+// Get Training History
+secureApiRouter.post('/training-history', async (req, res) => {
   try {
-    const userEntries = await trainingCollection.find({ userId: req.user._id }).toArray();
-    res.status(200).json(userEntries);
+    const newSession = await saveTrainingSession(req.user._id, req.body.sessionDetails);
+    res.status(201).json(newSession);
   } catch (error) {
-    console.error('Error fetching training history:', error);
-    res.status(500).json({ error: 'Failed to fetch training history' });
-  }
-});
-  
-
-// User creation
-apiRouter.post('/auth/create', async (req, res) => {
-    const { email, password } = req.body;
-    try {
-      if (await getUser(email)) {
-        return res.status(409).json({ msg: 'User already exists' });
-      }
-  
-      const user = await createUser(email, password);
-      setAuthCookie(res, user.token); // Optional: Set a cookie for immediate login
-      res.status(201).json({ id: user._id });
-    } catch (error) {
-      res.status(500).json({ msg: 'Error creating user', error: error.message });
-    }
-  });
-
-// Verify authentication
-apiRouter.get('/auth/verify', async (req, res) => {
-  const authToken = req.cookies['token'];
-  const user = await getUserByToken(authToken);
-  if (user) {
-    res.status(200).json({ authenticated: true, email: user.email });
-  } else {
-    res.status(401).json({ authenticated: false });
+    console.error('Error saving training session:', error.message); // Log the error
+    res.status(500).json({ error: 'Failed to save training session' });
   }
 });
 
-
-
-
-// User logout
-apiRouter.delete('/auth/logout', (_req, res) => {
-  res.clearCookie(authCookieName);
-  res.status(204).end();
-});
-
-
-// Get training history
-secureApiRouter.get('/training-history', async (req, res) => {
-  try {
-    const userEntries = await trainingCollection.find({ userId: req.user._id }).toArray();
-    res.status(200).json(userEntries);
-  } catch (error) {
-    console.error('Error fetching training history:', error);
-    res.status(500).json({ error: 'Failed to fetch training history' });
-  }
-});
   
 
 // WORKING DO NOT TOUCH
@@ -171,8 +188,8 @@ const httpServer = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// Attach WebSocket proxy
-peerProxy(httpServer);
+// // Attach WebSocket proxy
+// peerProxy(httpServer);
 
 
 

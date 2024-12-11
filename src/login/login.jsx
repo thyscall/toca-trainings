@@ -5,37 +5,32 @@ import { AuthState } from "./authState";
 import "./login.css";
 
 export default function Login({ onAuthChange }) {
-  const [authState, setAuthState] = useState(AuthState.Unknown);
+  const [authState, setAuthState] = useState(AuthState.Unauthenticated);
   const [userName, setUserName] = useState("");
 
   // Check authentication on mount
   useEffect(() => {
-    const authToken = localStorage.getItem("authToken");
-    if (authToken) {
-      // Verify the token with the server
-      fetch("/api/auth/verify", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          throw new Error("Invalid token");
-        })
-        .then((data) => {
-          setUserName(data.userName);
-          setAuthState(AuthState.Authenticated);
-        })
-        .catch(() => {
-          setAuthState(AuthState.Unauthenticated);
+    const verifyAuth = async () => {
+      try {
+        // Verify authentication token with server
+        const response = await fetch("/api/auth/verify", {
+          method: "GET", // Updated to use GET method
+          credentials: "include", // Ensures cookies are sent with the request
         });
-    } else {
-      setAuthState(AuthState.Unauthenticated);
-    }
+
+        if (!response.ok) {
+          throw new Error("Invalid token");
+        }
+
+        const data = await response.json();
+        setUserName(data.email); // Use the email from server response
+        setAuthState(AuthState.Authenticated);
+      } catch (err) {
+        setAuthState(AuthState.Unauthenticated);
+      }
+    };
+
+    verifyAuth();
   }, []);
 
   const handleAuthChange = (newUserName, newAuthState) => {

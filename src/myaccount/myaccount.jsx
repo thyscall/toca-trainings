@@ -13,43 +13,43 @@ export function MyAccount() {
   const [error, setError] = useState(null);
   const [socket, setSocket] = useState(null);
 
-  // Initialize WebSocket connection
-  useEffect(() => {
-    const protocol = window.location.protocol === "http:" ? "ws" : "wss";
-    const ws = new WebSocket(`ws://localhost:4000/ws`);
+  // // Initialize WebSocket connection
+  // useEffect(() => {
+  //   const protocol = window.location.protocol === "http:" ? "ws" : "wss";
+  //   const ws = new WebSocket(`ws://localhost:4000/ws`);
 
-    ws.onopen = () => {
-      console.log("Connected to WebSocket");
-      setSocket(ws);
-    };
+  //   ws.onopen = () => {
+  //     console.log("Connected to WebSocket");
+  //     setSocket(ws);
+  //   };
 
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
+  //   ws.onmessage = (event) => {
+  //     try {
+  //       const data = JSON.parse(event.data);
 
-        if (data.type === "training-session-update") {
-          console.log("New training session update received:", data.sessionDetails);
-          setTrainingHistory((prevHistory) => [...prevHistory, data.sessionDetails]);
-        }
-      } catch (error) {
-        console.error("Error parsing WebSocket message:", error);
-      }
-    };
+  //       if (data.type === "training-session-update") {
+  //         console.log("New training session update received:", data.sessionDetails);
+  //         setTrainingHistory((prevHistory) => [...prevHistory, data.sessionDetails]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error parsing WebSocket message:", error);
+  //     }
+  //   };
 
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-      setSocket(null);
-    };
+  //   ws.onclose = () => {
+  //     console.log("WebSocket connection closed");
+  //     setSocket(null);
+  //   };
 
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
+  //   ws.onerror = (error) => {
+  //     console.error("WebSocket error:", error);
+  //   };
 
-    // Cleanup WebSocket connection on component unmount
-    return () => {
-      if (ws) ws.close();
-    };
-  }, []);
+  //   // Cleanup WebSocket connection on component unmount
+  //   return () => {
+  //     if (ws) ws.close();
+  //   };
+  // }, []);
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -60,41 +60,33 @@ export function MyAccount() {
   // Submit a new training session
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+  
+    // Basic validation for session details
+    if (!formData.date || !formData.focus || !formData.type || !formData.duration) {
+      setError("All fields are required.");
+      return;
+    }
+  
     try {
+      const token = localStorage.getItem('authToken');
       const response = await fetch('/api/training-history', {
         method: 'POST',
-        credentials: 'include', // Automatically include authentication cookies
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ sessionDetails: formData }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to save training session');
       }
-
+  
       const newSession = await response.json();
       setTrainingHistory([...trainingHistory, newSession]);
-      setFormData({
-        date: "",
-        focus: "",
-        type: "",
-        duration: "",
-        feedback: "",
-      });
-
-      // Send new session to WebSocket for real-time updates
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(
-          JSON.stringify({
-            type: "new-training-session",
-            sessionDetails: newSession,
-          })
-        );
-      }
+      setFormData({ date: '', focus: '', type: '', duration: '', feedback: '' });
     } catch (err) {
-      console.error('Error saving training session:', err);
+      console.error('Error saving training session:', err.message);
       setError(err.message);
     }
   };

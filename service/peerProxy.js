@@ -1,75 +1,54 @@
-const { WebSocketServer } = require('ws');
-const uuid = require('uuid');
+// const { WebSocketServer } = require('ws');
+// const uuid = require('uuid');
 
-function peerProxy(httpServer) {
-  // Create a WebSocket object
-  const wss = new WebSocketServer({ noServer: true });
+// function peerProxy(httpServer) {
+//   const wss = new WebSocketServer({ noServer: true });
+//   const connections = [];
 
-  // Handle the protocol upgrade from HTTP to WebSocket
-  httpServer.on('upgrade', (request, socket, head) => {
-    wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit('connection', ws, request);
-    });
-  });
+//   httpServer.on('upgrade', (request, socket, head) => {
+//     wss.handleUpgrade(request, socket, head, (ws) => {
+//       wss.emit('connection', ws, request);
+//     });
+//   });
 
-  // Keep track of all connections to forward messages
-  let connections = [];
+//   wss.on('connection', (ws) => {
+//     const connection = { id: uuid.v4(), alive: true, ws };
+//     connections.push(connection);
 
-  wss.on('connection', (ws) => {
-    const connection = { id: uuid.v4(), alive: true, ws };
-    connections.push(connection);
+//     ws.on('message', (data) => {
+//       console.log('WebSocket message received:', data);
+//     });
 
-ws.on('message', (data) => {
-    try {
-        const parsedData = JSON.parse(data);
-    
-        // Check if the message is about a new training session
-        if (parsedData.type === 'new-training-session') {
-        console.log('New training session received:', parsedData.sessionDetails);
-    
-        // Broadcast the new training session to all connected clients
-        connections.forEach((client) => {
-            if (client.ws.readyState === WebSocket.OPEN) {
-            client.ws.send(
-                JSON.stringify({
-                type: 'training-session-update',
-                sessionDetails: parsedData.sessionDetails,
-                })
-            );
-            }
-        });
-        }
-    } catch (error) {
-        console.error('Error handling WebSocket message:', error);
-    }
-    });
-      
+//     ws.on('close', () => {
+//       const index = connections.findIndex((c) => c.id === connection.id);
+//       if (index >= 0) connections.splice(index, 1);
+//     });
 
-    // Handle client disconnections
-    ws.on('close', () => {
-      const index = connections.findIndex((client) => client.id === connection.id);
-      if (index >= 0) {
-        connections.splice(index, 1);
-      }
-    });
+//     ws.on('pong', () => {
+//       connection.alive = true;
+//     });
+//   });
 
-    // Respond to pings to keep connections alive
-    ws.on('pong', () => {
-      connection.alive = true;
-    });
-  });
+//   setInterval(() => {
+//     connections.forEach((c) => {
+//       if (!c.alive) {
+//         c.ws.terminate();
+//       } else {
+//         c.alive = false;
+//         c.ws.ping();
+//       }
+//     });
+//   }, 10000);
 
-  // Periodic ping to keep connections alive
-  setInterval(() => {
-    connections.forEach((client) => {
-      if (!client.alive) {
-        client.ws.terminate();
-      } else {
-        client.alive = false;
-        client.ws.ping();
-      }
-    });
-  }, 10000);
-}
+// //   function broadcastMessage(message) {
+// //     connections.forEach((c) => {
+// //       if (c.ws.readyState === WebSocket.OPEN) {
+// //         c.ws.send(message);
+// //       }
+// //     });
+// //   }
 
-module.exports = { peerProxy };
+// //   return { broadcastMessage };
+// // }
+
+// module.exports = { peerProxy };

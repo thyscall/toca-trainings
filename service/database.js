@@ -87,7 +87,7 @@ async function authenticateUser(email, password) {
   }
 }
 
-// Training Session Management
+// Save user's training sessions
 async function saveTrainingSession(userId, sessionDetails) {
   try {
     const session = {
