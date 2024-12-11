@@ -96,6 +96,25 @@ main header {
     text-decoration: underline;
   }
   
+  .notifications {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: black;
+  }
+  
+  .messages {
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .messages div {
+    margin-bottom: 5px;
+  }
+  
+
   @media (max-width: 768px) {
     header {
       flex-direction: column;

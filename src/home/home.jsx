@@ -2,6 +2,46 @@ import React, { useState, useEffect } from "react";
 import "./home.css";
 
 export default function Home() {
+  const [messages, setMessages] = useState([]); // To store notifications
+
+  useEffect(() => {
+    // Initialize WebSocket connection
+    const protocol = window.location.protocol === "http:" ? "ws" : "wss";
+    const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+    ws.onopen = () => {
+      console.log("Connected to WebSocket");
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+
+        if (data.type === "user-login") {
+          // Handle login notification
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            `User logged in: ${data.email} at ${new Date(data.timestamp).toLocaleTimeString()}`,
+          ]);
+        }
+      } catch (error) {
+        console.error("Error parsing WebSocket message:", error);
+      }
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    ws.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    // Cleanup WebSocket connection on component unmount
+    return () => {
+      if (ws) ws.close();
+    };
+  }, []);
   return (
     <div>
       <header>
@@ -19,6 +59,16 @@ export default function Home() {
         <img src="Images/Utah Celtic FC.png" alt="Utah Celtic Soccer" width="100" height="100"/>
         <img src="Images/UtahSurf.jpg" alt="Utah Surf Soccer" width="100" height="100"/>
         </header>
+
+         {/* Real-Time Notifications Section */}
+         <section className="notifications">
+          <p>Stay up to date with who's training:</p>
+          <div className="messages">
+            {messages.map((msg, index) => (
+              <div key={index}>{msg}</div>
+            ))}
+          </div>
+        </section>
       </main>
 
       <footer>

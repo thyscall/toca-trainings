@@ -88,11 +88,11 @@ How much money do you spend on your children's sports activities each year? How 
 - Backend provides service endpoints
 - Frontend calls your service endpoints
 
-### Startup Login Assignment Completion
-- Simon Service deployed to production environment
+### Startup Login Assignment Completion (Login -> My Account page)
+- Simon Login deployed to production environment
 - Git commits demonstrate ownership
 - Supports new user registration
 - Supports existing user authentication
 - Stores application data in MongoDB
-- Stores and retrieves credentials 
-- Frontend calls your service endpoints
+- Stores and retrieves credentials in MongoDB
+- Restricts application functionality based upon authentification

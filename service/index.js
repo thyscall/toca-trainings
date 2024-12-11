@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
-const { getUser, getUserByToken, createUser } = require('./database.js');
+const { getUser, getUserByToken, createUser, authenticateUser, saveTrainingSession } = require('./database.js');
 const apiConfig = require('./apiConfig.json'); 
 const { trainingCollection } = require('./database.js');
 const { peerProxy } = require('./peerProxy');
@@ -32,6 +32,23 @@ function setAuthCookie(res, authToken) {
 const apiRouter = express.Router();
 app.use('/api', apiRouter);
 
+// User login
+apiRouter.post('/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await authenticateUser(email, password);
+    const token = user.token; // Ensure token is generated in the database logic.
+    
+    // Set the authentication cookie
+    setAuthCookie(res, token);
+
+    res.status(200).json({ token, email: user.email }); // Confirm token is sent to the frontend.
+  } catch (error) {
+    console.error('Login error:', error.message);
+    res.status(401).json({ error: 'Invalid email or password' });
+  }
+});
+
 // Secure middleware
 const secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
@@ -53,7 +70,7 @@ let trainingHistory = []; // Temporary in-memory storage (replace with a databas
 
 secureApiRouter.post('/training-history', async (req, res) => {
   try {
-    const newSession = await saveTrainingSession(req.user._id, req.body.sessionDetails);
+    const newSession = await saveTrainingSession(req.user._id, req.body.sessionDetails); // define saveTrainingSession
     res.status(201).json(newSession);
   } catch (error) {
     console.error('Error saving training session:', error.message);
@@ -101,18 +118,7 @@ apiRouter.get('/auth/verify', async (req, res) => {
   }
 });
 
-// User login
-apiRouter.post('/auth/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await authenticateUser(email, password);
-    res.cookie('token', user.token, { httpOnly: true, secure: true });
-    res.status(200).json({ id: user._id, email: user.email });
-  } catch (error) {
-    console.error('Login error:', error.message);
-    res.status(401).json({ error: 'Invalid email or password' });
-  }
-});
+
 
 
 // User logout
