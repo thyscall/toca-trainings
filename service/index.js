@@ -2,8 +2,11 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const { getUser, getUserByToken, createUser } = require('./database.js');
-const { peerProxy } = require('./peerProxy');
+const { peerProxy, broadcastMessage } = require('./peerProxy');
 const apiConfig = require('./apiConfig.json'); // Import API config
+
+// const { broadcastMessage } = require('./peerProxy');
+
 
 const app = express();
 const port = process.argv[2] || 4000;
@@ -24,7 +27,7 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-// API Routes
+// Init API Routes
 const apiRouter = express.Router();
 app.use('/api', apiRouter);
 
@@ -47,6 +50,12 @@ apiRouter.post('/auth/login', async (req, res) => {
   if (user && await bcrypt.compare(password, user.password)) {
     setAuthCookie(res, user.token);
     res.status(200).json({ id: user._id });
+
+    // WebSocket broadcast
+    broadcastMessage({
+      type: 'userLogin',
+      username: email,
+    });
   } else {
     res.status(401).json({ msg: 'Unauthorized' });
   }
@@ -65,7 +74,7 @@ apiRouter.use(secureApiRouter);
 secureApiRouter.use(async (req, res, next) => {
   let authToken = req.cookies[authCookieName];
 
-  if (!authToken && req.headers.authorization) { //**** Check Authorization header ****//
+  if (!authToken && req.headers.authorization) {
     authToken = req.headers.authorization.split(" ")[1];
   }
 
@@ -76,7 +85,7 @@ secureApiRouter.use(async (req, res, next) => {
   try {
     const user = await getUserByToken(authToken);
     if (user) {
-      req.user = user; // Attach user to request
+      req.user = user; 
       next();
     } else {
       res.status(401).json({ msg: 'Unauthorized' });
@@ -91,16 +100,21 @@ secureApiRouter.use(async (req, res, next) => {
 // Save Training Session
 secureApiRouter.post('/training-history', async (req, res) => {
   try {
-    const user = req.user; 
-    const { sessionDetails } = req.body; 
+    const user = req.user;
+    const { sessionDetails } = req.body;
 
     if (!sessionDetails) {
       return res.status(400).json({ msg: 'Missing session details' });
     }
 
     const newSession = await saveTrainingSession(user._id, sessionDetails);
+    res.status(201).json(newSession);
 
-    res.status(201).json(newSession); 
+    // WebSocket broadcast
+    broadcastMessage({
+      type: 'training-session-update',
+      sessionDetails,
+    });
   } catch (error) {
     console.error('Error saving training session:', error.message);
     res.status(500).json({ error: 'Failed to save training session' });
@@ -109,7 +123,7 @@ secureApiRouter.post('/training-history', async (req, res) => {
 
 // Helper to fetch Premier League standings using dynamic import
 async function fetchPremierLeagueStandings() {
-  const { default: fetch } = await import('node-fetch'); // Dynamically import node-fetch
+  const { default: fetch } = await import('node-fetch'); 
   const url = `https://api.football-data.org/v2/competitions/PL/standings`;
 
   const response = await fetch(url, {
@@ -153,3 +167,4 @@ secureApiRouter.get('/user-info', (req, res) => {
 const httpServer = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+peerProxy(httpServer);

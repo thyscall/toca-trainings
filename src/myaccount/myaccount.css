@@ -52,6 +52,7 @@ main {
 main h1, main h2 {
     color: white;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 main h1 {

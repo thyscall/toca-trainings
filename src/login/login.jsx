@@ -11,11 +11,11 @@ export default function Login({ onAuthChange }) {
   const [notifications, setNotifications] = useState([]);
 
 
-  // Check authentication on mount
+  
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     if (authToken) {
-      // Verify the token with the server
+      
       fetch("/api/auth/verify", {
         method: "POST",
         headers: {
@@ -59,6 +59,7 @@ export default function Login({ onAuthChange }) {
   
 
   return (
+    <div>
     <main className="login-page bg-secondary text-center">
       {authState !== AuthState.Unknown && <h1>Welcome to Toca</h1>}
       {authState === AuthState.Authenticated && (
@@ -75,5 +76,6 @@ export default function Login({ onAuthChange }) {
         />
       )}
     </main>
+    </div>
   );
 };

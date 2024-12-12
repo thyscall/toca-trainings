@@ -2,46 +2,45 @@ import React, { useState, useEffect } from "react";
 import "./home.css";
 
 export default function Home() {
-  const [messages, setMessages] = useState([]); // To store notifications
+  
 
   useEffect(() => {
-    // Initialize WebSocket connection
-    const protocol = window.location.protocol === "http:" ? "ws" : "wss";
-    const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
+  const wsProtocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+  const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
 
-    ws.onopen = () => {
-      console.log("Connected to WebSocket");
-    };
+  ws.onopen = () => {
+    console.log("WebSocket connection established");
+    setSocket(ws);
+  };
 
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
+  ws.onmessage = (event) => {
+    try {
+      const data = JSON.parse(event.data);
 
-        if (data.type === "user-login") {
-          // Handle login notification
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            `User logged in: ${data.email} at ${new Date(data.timestamp).toLocaleTimeString()}`,
-          ]);
-        }
-      } catch (error) {
-        console.error("Error parsing WebSocket message:", error);
+      if (data.type === 'userLogin') {
+        console.log(data.message); // Or show as a notification
+        alert(data.message); 
       }
-    };
 
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
+      // Handle other message types
+    } catch (error) {
+      console.error("Failed to parse WebSocket message", error);
+    }
+  };
 
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
+  ws.onclose = () => {
+    console.log("WebSocket connection closed");
+    setSocket(null);
+  };
 
-    // Cleanup WebSocket connection on component unmount
-    return () => {
-      if (ws) ws.close();
-    };
-  }, []);
+  ws.onerror = (error) => {
+    console.error("WebSocket error:", error);
+  };
+
+  return () => {
+    if (ws) ws.close();
+  };
+}, []);
   return (
     <div>
       <header>

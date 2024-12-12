@@ -11,7 +11,15 @@ function peerProxy(httpServer) {
     });
   });
 
+  // Store all active WebSocket connections
   let connections = [];
+
+  // Broadcast a message to all connected clients
+  function broadcastMessage(message) {
+    connections.forEach((c) => {
+      c.ws.send(JSON.stringify(message));
+    });
+  }
 
   wss.on('connection', (ws) => {
     const connection = { id: uuid.v4(), alive: true, ws };
@@ -37,7 +45,7 @@ function peerProxy(httpServer) {
     });
   });
 
-  // Keep connections alive
+  // Keep connections alive with ping/pong
   setInterval(() => {
     connections.forEach((c) => {
       if (!c.alive) {
@@ -48,6 +56,8 @@ function peerProxy(httpServer) {
       }
     });
   }, 10000);
+
+  return { broadcastMessage };
 }
 
 module.exports = { peerProxy };
