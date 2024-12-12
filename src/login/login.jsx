@@ -3,10 +3,13 @@ import { Authenticated } from "./authenticated";
 import { Unauthenticated } from "./unauthenticated";
 import { AuthState } from "./authState";
 import "./login.css";
+import notifier from './loginNotifier';
 
 export default function Login({ onAuthChange }) {
   const [authState, setAuthState] = useState(AuthState.Unknown);
   const [userName, setUserName] = useState("");
+  const [notifications, setNotifications] = useState([]);
+
 
   // Check authentication on mount
   useEffect(() => {
@@ -43,6 +46,17 @@ export default function Login({ onAuthChange }) {
     setAuthState(newAuthState);
     onAuthChange(newUserName, newAuthState);
   };
+
+  const handleLogin = async (loginUserName) => {
+    try {
+      handleAuthChange(loginUserName, AuthState.Authenticated);
+      notifier.sendLoginNotification(loginUserName); // Notify other users
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+  };
+  
+  
 
   return (
     <main className="login-page bg-secondary text-center">
