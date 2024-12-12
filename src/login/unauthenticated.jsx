@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./login.css";
 
 export function Unauthenticated({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -26,31 +25,9 @@ export function Unauthenticated({ onLogin }) {
     }
   };
 
-  const handleCreateAccount = async () => {
-    try {
-      const response = await fetch("/api/auth/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.msg || "Failed to create account");
-      }
-
-      const data = await response.json();
-      localStorage.setItem("authToken", data.token);
-      onLogin(email); // Automatically log in the new user
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-
   return (
     <div>
-      <h2>Welcome to Toca</h2>
+      <h2>Login</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <input
         type="email"
@@ -65,8 +42,6 @@ export function Unauthenticated({ onLogin }) {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
-      <br></br>
-      <button onClick={handleCreateAccount}>Create an account</button>
     </div>
   );
 }

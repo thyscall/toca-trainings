@@ -5,32 +5,37 @@ import { AuthState } from "./authState";
 import "./login.css";
 
 export default function Login({ onAuthChange }) {
-  const [authState, setAuthState] = useState(AuthState.Unauthenticated);
+  const [authState, setAuthState] = useState(AuthState.Unknown);
   const [userName, setUserName] = useState("");
 
   // Check authentication on mount
   useEffect(() => {
-    const verifyAuth = async () => {
-      try {
-        // Verify authentication token with server
-        const response = await fetch("/api/auth/verify", {
-          method: "GET", // Updated to use GET method
-          credentials: "include", // Ensures cookies are sent with the request
-        });
-
-        if (!response.ok) {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      // Verify the token with the server
+      fetch("/api/auth/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
           throw new Error("Invalid token");
-        }
-
-        const data = await response.json();
-        setUserName(data.email); // Use the email from server response
-        setAuthState(AuthState.Authenticated);
-      } catch (err) {
-        setAuthState(AuthState.Unauthenticated);
-      }
-    };
-
-    verifyAuth();
+        })
+        .then((data) => {
+          setUserName(data.userName);
+          setAuthState(AuthState.Authenticated);
+        })
+        .catch(() => {
+          setAuthState(AuthState.Unauthenticated);
+        });
+    } else {
+      setAuthState(AuthState.Unauthenticated);
+    }
   }, []);
 
   const handleAuthChange = (newUserName, newAuthState) => {
@@ -41,7 +46,7 @@ export default function Login({ onAuthChange }) {
 
   return (
     <main className="login-page bg-secondary text-center">
-      {authState !== AuthState.Unknown && <h1></h1>}
+      {authState !== AuthState.Unknown && <h1>Welcome to Toca</h1>}
       {authState === AuthState.Authenticated && (
         <Authenticated
           userName={userName}

@@ -40,15 +40,13 @@
 //     });
 //   }, 10000);
 
-// //   function broadcastMessage(message) {
-// //     connections.forEach((c) => {
-// //       if (c.ws.readyState === WebSocket.OPEN) {
-// //         c.ws.send(message);
-// //       }
-// //     });
-// //   }
+//   function broadcastMessage(message) {
+//     connections.forEach((c) => {
+//       if (c.ws.readyState === WebSocket.OPEN) {
+//         c.ws.send(JSON.stringify(message));
+//       }
+//     });
+//   }
 
-// //   return { broadcastMessage };
-// // }
-
-// module.exports = { peerProxy };
+// module.exports = { peerProxy, broadcastMessage };
+// }

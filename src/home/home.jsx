@@ -62,12 +62,7 @@ export default function Home() {
 
          {/* Real-Time Notifications Section */}
          <section className="notifications">
-          <p>Stay up to date with who's training:</p>
-          <div className="messages">
-            {messages.map((msg, index) => (
-              <div key={index}>{msg}</div>
-            ))}
-          </div>
+          <p></p>
         </section>
       </main>
 
