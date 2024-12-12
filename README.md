@@ -103,5 +103,5 @@ How much money do you spend on your children's sports activities each year? How 
 - Backend listens for WebSocket connection
 - Frontend makes WebSocket connection
 - Data sent over WebSocket connection
-- WebSocket data displayed in the application interface
+- WebSocket data displayed in the application interface (incomplete)
 - All visible elements are working
