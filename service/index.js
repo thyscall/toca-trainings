@@ -202,13 +202,17 @@ app.use('/api', apiRouter);
 // User creation
 apiRouter.post('/auth/create', async (req, res) => {
   const { email, password } = req.body;
-  if (await getUser(email)) {
-    return res.status(409).json({ msg: 'User already exists' });
-  }
+  try {
+    if (await getUser(email)) {
+      return res.status(409).json({ msg: 'User already exists' });
+    }
 
-  const user = await createUser(email, password);
-  setAuthCookie(res, user.token);
-  res.status(201).json({ id: user._id });
+    const user = await createUser(email, password);
+    res.status(201).json({ id: user._id, token: user.token }); // Return token for frontend use if needed
+  } catch (error) {
+    console.error('Error creating user:', error.message);
+    res.status(500).json({ msg: 'Error creating user' });
+  }
 });
 
 // User login
@@ -234,15 +238,30 @@ const secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
-  const authToken = req.cookies[authCookieName];
-  const user = await getUserByToken(authToken);
-  if (user) {
-    req.user = user; // Attach user data
-    next();
-  } else {
-    res.status(401).json({ msg: 'Unauthorized' });
+  let authToken = req.cookies[authCookieName];
+
+  if (!authToken && req.headers.authorization) { //**** Check Authorization header ****//
+    authToken = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!authToken) {
+    return res.status(401).json({ msg: 'Unauthorized: No token provided' });
+  }
+
+  try {
+    const user = await getUserByToken(authToken);
+    if (user) {
+      req.user = user; // Attach user to request
+      next();
+    } else {
+      res.status(401).json({ msg: 'Unauthorized' });
+    }
+  } catch (error) {
+    console.error('Token validation error:', error.message);
+    res.status(500).json({ msg: 'Server error during authentication' });
   }
 });
+
 
 // Save Training Session
 secureApiRouter.post('/training-history', async (req, res) => {

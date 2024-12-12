@@ -227,15 +227,25 @@ export function MyAccount() {
     feedback: "",
   });
   const [error, setError] = useState(null);
+ // fetch tokens from cookies
+  const fetchAuthToken = () => {
+    let authToken = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1];
+
+    if (!authToken) {
+      authToken = localStorage.getItem("authToken");
+    }
+
+    return authToken;
+  };
 
   // Fetch training history
   useEffect(() => {
     const fetchTrainingHistory = async () => {
       try {
-        const authToken = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("token="))
-          ?.split("=")[1];
+        const authToken = fetchAuthToken();
 
         if (!authToken) {
           throw new Error("No authentication token found");
@@ -273,10 +283,7 @@ export function MyAccount() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const authToken = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1];
+      const authToken = fetchAuthToken
 
       if (!authToken) {
         throw new Error("No authentication token found");
