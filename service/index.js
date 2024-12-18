@@ -2,14 +2,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const { getUser, getUserByToken, createUser } = require('./database.js');
-const { peerProxy, broadcastMessage } = require('./peerProxy');
+// const { peerProxy, broadcastMessage } = require('./peerProxy');
 const apiConfig = require('./apiConfig.json'); // Import API config
-
+const { WebSocketServer } = require('ws');
 // const { broadcastMessage } = require('./peerProxy');
 
 
 const app = express();
-const port = process.argv[2] || 4000;
+const port = 4000;
 const authCookieName = 'token'; // Matches Simon example
 
 // Middleware
@@ -51,11 +51,11 @@ apiRouter.post('/auth/login', async (req, res) => {
     setAuthCookie(res, user.token);
     res.status(200).json({ id: user._id });
 
-    // WebSocket broadcast
-    broadcastMessage({
-      type: 'userLogin',
-      username: email,
-    });
+    // // WebSocket broadcast
+    // broadcastMessage({
+    //   type: 'userLogin',
+    //   username: email,
+    // });
   } else {
     res.status(401).json({ msg: 'Unauthorized' });
   }
@@ -167,4 +167,22 @@ secureApiRouter.get('/user-info', (req, res) => {
 const httpServer = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-peerProxy(httpServer);
+
+// === Public WebSocket Setup ===
+const wss = new WebSocketServer({ server: httpServer });
+
+wss.on('connection', (ws) => {
+  console.log('WebSocket connection established');
+
+  // Handle incoming messages
+  ws.on('message', (message) => {
+    console.log('Message received from client:', message); // Debug log
+    ws.send(`Echo from server: ${message}`); // Echo message back to client
+  });
+
+  ws.on('close', () => {
+    console.log('WebSocket connection closed');
+  });
+});
+
+console.log('Public WebSocket server running');

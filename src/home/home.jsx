@@ -2,45 +2,46 @@ import React, { useState, useEffect } from "react";
 import "./home.css";
 
 export default function Home() {
-  
+  const [ws, setWs] = useState(null);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-  const wsProtocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-  const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
+    const wsInstance = new WebSocket("ws://localhost:4000"); // Explicit URL
 
-  ws.onopen = () => {
-    console.log("WebSocket connection established");
-    setSocket(ws);
-  };
+    wsInstance.onopen = () => {
+      console.log("WebSocket connection established");
+    };
 
-  ws.onmessage = (event) => {
-    try {
-      const data = JSON.parse(event.data);
+    wsInstance.onmessage = (event) => {
+      console.log("Message received from server:", event.data);
+      setMessages((prev) => [...prev, event.data]);
+    };
 
-      if (data.type === 'userLogin') {
-        console.log(data.message); // Or show as a notification
-        alert(data.message); 
-      }
+    wsInstance.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
 
-      // Handle other message types
-    } catch (error) {
-      console.error("Failed to parse WebSocket message", error);
+    wsInstance.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    setWs(wsInstance);
+
+    return () => wsInstance.close(); // Cleanup
+  }, []);
+
+  const sendMessage = () => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      console.log("Sending message:", input);
+      ws.send(input);
+      setInput("");
+    } else {
+      console.error("WebSocket is not open");
     }
   };
 
-  ws.onclose = () => {
-    console.log("WebSocket connection closed");
-    setSocket(null);
-  };
 
-  ws.onerror = (error) => {
-    console.error("WebSocket error:", error);
-  };
-
-  return () => {
-    if (ws) ws.close();
-  };
-}, []);
   return (
     <div>
       <header>
@@ -60,9 +61,24 @@ export default function Home() {
         </header>
 
          {/* Real-Time Notifications Section */}
-         <section className="notifications">
-          <p></p>
+        <section className="notifications">
+          <h4>Real-Time Notifications</h4>
+          <ul>
+            {messages.map((msg, index) => ( // Displaying real-time messages
+              <li key={index}>{msg}</li>
+            ))}
+          </ul>
         </section>
+        {/* Input Section */}
+        <div className="message-input">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type a message"
+          />
+          <button onClick={sendMessage}>Send</button>
+        </div>
       </main>
 
       <footer>
