@@ -9,7 +9,7 @@ const { WebSocketServer } = require('ws');
 
 
 const app = express();
-const port = 4000;
+const port = process.argv[2] || 4000;
 const authCookieName = 'token'; // Matches Simon example
 
 // Middleware
