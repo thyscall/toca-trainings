@@ -16,24 +16,25 @@ How much money do you spend on your children's sports activities each year? How 
 
 
 ### Use of Technology
-- [ ] HTML - Uses HTML for two pages:
-  1. Home **DONE**
-  2. Login **DONE**
-  3. About Me **DONE**
+- [ ] HTML - Uses HTML for four pages:
+  1. Home 
+  2. Login 
+  3. My Training History
+  4. About Me 
 
-- [ ] CSS - Application styles that are adaptable to desktop and mobile devices, follow good UX design principles, and emphasize value of website.
+- [X] CSS - Application styles that are adaptable to desktop and mobile devices, follow good UX design principles, and emphasize value of website.
 - [ ] JavaScript: Interactive menu for FAQ page and training schedule.
 - [ ] React - Provides login, training schedule, training customization, and display trainer feedback.
 - [ ] Web Service - Backend service for:
   - user login
   - reserved trainings
   - display trainer feedback
-- [ ] Authentication - User account creation and identification **Placeholder**
-- [ ] Database Data/Login - Store the following information: **Placeholder**
+- [ ] Authentication - User account creation and identification
+- [ ] Database Data/Login - Store the following information: 
   - user/player information (Name, email, phone, age)
   - training date
   - performance evaluation 
-- [ ] WebSocket Data - As a user books a training, it is added to their upcoming trainings **Placeholder**
+- [ ] WebSocket Data - As a user books a training, it is added to their upcoming trainings
   - coaching feedback 
 - [ ] WebSocket Data - As a user completes a training, it is added to their training history
 
@@ -45,8 +46,7 @@ How much money do you spend on your children's sports activities each year? How 
 ![About Page Sketch](Web-Startup-FAQ.png)
 
 
-### Startup HTML Assignment Completion
-- Simon HTML deployed to production environment
+### HTML
 - GitHub startup repository in web footer
 - Notes in Git repository
 - Git commits
@@ -54,23 +54,16 @@ How much money do you spend on your children's sports activities each year? How 
 - Body, nav, main, header, footer on every page
 - Links between pages in header on every page
 - Text on each page
-- Placeholder for 3rd party service calls on about page for Google Maps
-- One or more images included on home and about pages
-- Login placeholder and username display on login page
-- WebSocket data placeholder on myaccount page showing player performance history and assessment
+- 3rd party service calls on about page for Premier League Standings API
+- Images included on home and about pages
+- Login and username display on login page
 
-### Startup CSS Assignment Completion
-- Simon CSS deployed to production environment
-- Properly styled CSS header, footer, and main content body
-- This criterion is linked to a Learning OutcomeProperly styled CSS navigation elements
+### CSS
+- Properly styled CSS navigation elements, header, footer, and main content body
 - Responsive window resizing
-- Properly styled CSS application elements
-- Properly styled CSS application text content
-- Properly styled CSS application images
+- Properly styled CSS application elements, text content, and images
 
-### Startup React Assignment Completion
-- Simon React deployed to production environment
-- Git commits demonstrate ownership
+### React
 - Bundled using Vite
 - Multiple react components that implement or mock all app functionality
   1. Login component to mock service authentication
@@ -80,28 +73,21 @@ How much money do you spend on your children's sports activities each year? How 
 - React hooks applied on login.jsx and app.jsx
 
 ### Startup Service Assignment Completion
-- Simon Service deployed to production environment
-- Git commits demonstrate ownership
-- Create an HTTP service using Node.js and Express
-- Frontend served up using Express static middleware
+- HTTP service using Node.js and Express
+- Frontend server up using Express static middleware
 - Frontend calls third party service endpoints: Premier League Table on About page
 - Backend provides service endpoints
 - Frontend calls your service endpoints
 
 ### Startup Login Assignment Completion (Login -> My Account page)
-- Simon Login deployed to production environment
-- Git commits demonstrate ownership
-- Supports new user registration
-- Supports existing user authentication
+- New user registration
+- Existing user authentication
 - Stores application data in MongoDB
 - Stores and retrieves credentials in MongoDB
 - Restricts application functionality based upon authentification
 
-### Startup WebSocket Assignment Completion (Home page)
-- Simon WebSocket deployed to production environment
-- Git commits demonstrate ownership
+### WebSocket  on Home page
 - Backend listens for WebSocket connection
 - Frontend makes WebSocket connection
 - Data sent over WebSocket connection
 - WebSocket data displayed in the application interface
-- All visible elements are working
