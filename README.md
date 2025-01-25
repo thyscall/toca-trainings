@@ -38,13 +38,6 @@ How much money do you spend on your children's sports activities each year? How 
   - coaching feedback 
 - [ ] WebSocket Data - As a user completes a training, it is added to their training history
 
-### Design Images
-
-![Home Page Sketch](Web-Startup-Home.png)
-![FAQ Page Sketch](Web-Startup-About.png)
-![Training Schedule Page Sketch](Web-Startup-Schedule.png)
-![About Page Sketch](Web-Startup-FAQ.png)
-
 
 ### HTML
 - GitHub startup repository in web footer
