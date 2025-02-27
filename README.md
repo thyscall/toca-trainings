@@ -1,7 +1,7 @@
 # web-startup
 
 ### Elevator Pitch
-How much money do you spend on your children's sports activities each year? How do you know if your child is progressing? With just under $40B spent annually, the global youth sports industry lacks clear communication. This website is where parents, players, and coaches efficiently understand their progress. Book trainings, coach virtually, and log player progress all in one place. 
+I started training youth soccer players almost four years ago. I am excited to legitimize this business while strengthening the visibility that my players have on their growth. This website will be a platform where they can own their training progress in their accounts and have access to resources to help with the mental aspect of the beautiful game.
 
 ### Key Features
 - Secure login over HTTPS
