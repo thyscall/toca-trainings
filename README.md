@@ -21,15 +21,14 @@ I started training youth soccer players almost four years ago. I am excited to l
   4. About Me 
 
 - [X] CSS - Application styles that are adaptable to desktop and mobile devices, follow good UX design principles, and emphasize value of website.
-- [ ] JavaScript: Interactive menu for FAQ page and training schedule.
+- [ ] JavaScript – UI, interactivity, data authentication
 - [ ] React - Provides login and display trainer feedback.
 - [ ] Web Service - Backend service for:
   - user login
-  - reserved trainings
   - display trainer feedback
 - [ ] Authentication - User account creation and identification
 - [ ] Database Data/Login - Store the following information: 
-  - user/player information (Name, email, phone, age)
+  - user/player information (Name, email, age)
   - training date
   - performance evaluation 
 - [ ] WebSocket Data - As a user completes a training, it is added to their training history
