@@ -44,44 +44,48 @@ export default function Home() {
 
   return (
     <div>
-      <header>
-      </header>
 
       <main>
-      <h3>Why Toca?</h3>
+      <h3><b><i>welcome to toca</i></b></h3>
       <p>Enhance your soccer performance through specialized training that emphasizes ball mastery, finishing, decision-making, mental resilience, and personal growth. Our expert coaches are dedicated to developing your skills and fostering a winning mindset, empowering you to achieve your goals on and off the field.</p>
       <p>Athletes currently performing at</p>
-        <header className="teams">
-        <img src="Images/UtahUnited.jpg" alt="Utah United" width="100" height="100"/>
+      <div className="image-grid">
+        <img src="Images/UtahUnited.jpg" alt="Utah United" width="75" height="75"/>
         <img src="Images/BYUSoccer.jpg" alt="BYU Soccer" width="150" height="150"/>
-        <img src="Images/UVU.png" alt="UVU Soccer" width="100" height="100"/>
-        <img src="Images/SLCC.jpeg" alt="SLCC Soccer" width="115" height="100"/>
-        <img src="Images/SVU.png" alt="SVU Soccer" width="100" height="100"/>
-        <img src="Images/Utah Celtic FC.png" alt="Utah Celtic Soccer" width="100" height="100"/>
-        <img src="Images/LaRoca.png" alt="La Roca Futbol Club" width="100" height="100"/>
-        <img src="Images/UtahSurf.jpg" alt="Utah Surf Soccer" width="100" height="100"/>
-        <img src="Images/ProvoAthleticClub.png" alt="Provo Athletic Club" width="100" height="100"/>
-        </header>
-
-         {/* Real-Time Notifications Section */}
-        <section className="notifications">
-          <h4>Real-Time Notifications</h4>
-          <ul>
-            {messages.map((msg, index) => ( // Displaying real-time messages
-              <li key={index}>{msg}</li>
-            ))}
-          </ul>
-        </section>
-        {/* Input Section */}
-        <div className="message-input">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type a message"
-          />
-          <button onClick={sendMessage}>Send</button>
+        <img src="Images/UVU.png" alt="UVU Soccer" width="75" height="75"/>
+        <img src="Images/SLCC.jpeg" alt="SLCC Soccer" width="100" height="90"/>
+        <img src="Images/SVU.png" alt="SVU Soccer" width="75" height="75"/>
+        <img src="Images/Utah Celtic FC.png" alt="Utah Celtic Soccer" width="75" height="75"/>
+        <img src="Images/LaRoca.png" alt="La Roca Futbol Club" width="75" height="75"/>
+        <img src="Images/UtahSurf.jpg" alt="Utah Surf Soccer" width="75" height="75"/>
+        <img src="Images/ProvoAthleticClub.png" alt="Provo Athletic Club" width="75" height="75"/>
         </div>
+        {/* Real-Time Notifications Section */}
+        <div className="thought-section">
+          <h3>what do you want to achieve with trainings?</h3>
+
+          {/* Displaying Real-Time Messages */}
+          <div className="thought-messages">
+            <ul>
+              {messages.map((msg, index) => (
+                <li key={index}>{msg}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Input Section */}
+          <div className="thought-form">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type a message"
+              className="thought-input"
+            />
+            <button onClick={sendMessage} className="thought-button">Send</button>
+          </div>
+        </div>
+
       </main>
 
       <footer>

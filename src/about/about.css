@@ -1,87 +1,94 @@
+/* General Page Styling */
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: white;
-  color: black;
-  text-align: center;
-}
-
-
-body img {
-  max-width: 100%;
-  text-align: center;
-  margin: 0 auto;
-  display: block;
-}
-
-
-header {
-  background-color: black;
+  font-family: 'Helvetica', sans-serif;
+  background: linear-gradient(180deg, #0a0a0a, #1a1a1a);
   color: white;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-}
-
-.header-two {
-  background-color: black;
-  color: black;
-  padding: 40px;
+  margin: 0;
+  padding: 0;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-.logo h3 {
-  font-size: 24px;
+/* Page Title */
+h2 {
+  font-size: 28px;
   color: #39a95e;
-  margin: 10px;
-  margin-right: 35px;
-}
-
-
-.navbar .nav-links {
-  color: white;
-  text-decoration: none;
-  text-align: right;
-  margin-right: 10px;
-  font-weight: bold;
   font-style: italic;
+  margin-bottom: 15px;
 }
 
-.navbar .nav-links a:hover {
-  color: #39a95e;
+/* Quote Section */
+.quote-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 20px 0;
 }
 
-
-main {
-  padding: 80px;
-  color: white; 
-  background-color: #1a1a1a; 
+.quote {
+  font-style: italic;
+  font-size: 20px;
+  color: #ddd;
 }
 
-main h2 {
-  color: white; 
-  text-align: center;
+.author {
+  margin-top: 10px;
+  font-weight: bold;
 }
 
-main p {
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 40px;
-  text-align: center;
+/* League Table */
+.league-table {
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  text-align: left;
 }
 
-header img {
-  margin: 25px;
-  border-radius: 5px;
-}
-
-footer {
-  background-color: black;
+/* Table Header */
+.league-table thead {
+  background-color: #39a95e;
   color: white;
+}
+
+.league-table th,
+.league-table td {
+  padding: 12px;
+}
+
+/* Position Numeric Columns Centered */
+.position-column,
+.played-column,
+.points-column,
+.goal-diff-column {
+  text-align: center;
+}
+
+/* Align Team Crest & Name */
+.team-column {
+  text-align: left;
+}
+
+.team-info {
+  display: flex;
+  align-items: center;
+  gap: 30px; 
+}
+
+/* Team Logos */
+.team-logo {
+  width: 30px;
+  height: 30px;
+}
+
+/* Table Borders */
+.league-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Footer */
+footer {
+  background: black;
   padding: 20px;
   text-align: center;
 }
@@ -89,28 +96,25 @@ footer {
 footer a {
   color: #39a95e;
   text-decoration: none;
-  margin: 10px;
+  font-size: 16px;
 }
 
 footer a:hover {
   text-decoration: underline;
 }
 
+/* Mobile Optimization */
 @media (max-width: 768px) {
-  header {
-      flex-direction: column;
-      text-align: center;
-      color: white;
+  .league-table {
+    width: 100%;
   }
 
-  .navbar .nav-links a {
-      display: block;
-      margin: 10px 0;
+  .team-logo {
+    width: 25px;
+    height: 25px;
   }
 
-  main h2 {
-      font-size: 32px;
-      color: white;
-      text-align: center;
+  h2 {
+    font-size: 24px;
   }
 }

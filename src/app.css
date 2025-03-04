@@ -1,111 +1,148 @@
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: rgb(0, 0, 0);
-  color: black;
-  margin: 0;
-  padding: 0;
-  max-width: fit-content;
+/* Ensure header is a flex container */
+header {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between; /* Logo on left, menu on right */
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
-
-header {
-  background-color: black;
-  color: white;
-  padding: 20px;
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
+  padding: 15px 40px;
+  background: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
-.header-two {
-  background-color: white;
-  color: black;
-  padding: 40px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
+/* Ensure nav links are in a horizontal row */
+.nav-links {
+  list-style: none;
+  display: flex;  /* Makes the links appear in a row */
+  gap: 25px; 
+  margin: 0;
+  padding: 0;
 }
 
-
-.logo h3 {
-  font-size: 24px;
-  color: #39a95e;
-  margin: 10px;
-  margin-right: 35px;
-  font-style: italic;
+/* Individual nav items */
+.nav-links li {
+  display: inline-block;
 }
 
-.navbar .nav-links a {
-  color: #39a95e;
+/* Style for navigation links */
+.nav-links a {
+  color: white;
   text-decoration: none;
-  margin: 10px;
-  margin-right: 25px;
+  font-size: 18px;
   font-weight: bold;
-  font-style: italic;
-  text-align: right;
+  transition: color 0.3s ease;
 }
 
-.navbar .nav-links a:hover {
-  color: white 
+.nav-links a:hover {
+  color: #39a95e;
 }
 
 .navbar-brand {
-  color: #39a95e;
-  margin: 10px; 
-  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #39a95e; /* Green by default */
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
 }
 
-main {
-  padding: 80px;
-  text-align: center;
-
+.navbar-brand:hover {
+  color: white; /* Turns white on hover */
 }
 
-main h3 {
-  font-size: 32px;
+/* Global Background for All Pages */
+body {
+  font-family: 'Helvetica', sans-serif;
+  background: linear-gradient(180deg, #ffffff, #d3d3d3); 
   color: black;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  min-height: 100vh; 
 }
 
-main p {
+/* Headings */
+h1, h2, h3 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #39a95e; 
+  transition: color 0.3s ease-in-out;
+}
+
+h1:hover, h2:hover, h3:hover {
+  color: white;
+}
+
+/* Paragraphs */
+p {
   font-size: 18px;
   line-height: 1.6;
-  margin-bottom: 40px;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  transition: color 0.3s ease-in-out;
 }
 
-header img {
-  margin: 25px;
-  border-radius: 5px;
+p:hover {
+  color: #d3d3d3;
 }
 
-footer {
-  background-color: black;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-footer a {
+/* Links inside text */
+a {
   color: #39a95e;
   text-decoration: none;
-  margin: 0 10px;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
 }
 
-footer a:hover {
+a:hover {
+  color: white;
   text-decoration: underline;
 }
 
+/* Buttons (to match navbar effect) */
+.button {
+  background-color: #39a95e;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-color: white;
+  color: #39a95e;
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+
+/* Mobile Styles */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
     text-align: center;
-    color: white;
   }
 
-  .navbar .nav-links a {
-    display: block;
-    margin: 10px 0;
+  .nav-links {
+    flex-direction: row;  /* Ensures menu stays in a row on mobile */
+    justify-content: center;  /* Centers items on smaller screens */
+    gap: 15px;
   }
 }

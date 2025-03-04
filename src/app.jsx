@@ -15,46 +15,36 @@ function App() {
   return (
     <div className="body bg-dark text-light">
       <BrowserRouter>
-        <header className="container-fluid">
-          <nav className="navbar fixed-top navbar-dark">
-            <div className="navbar-brand">Toca Pro</div>
-            <menu className="navbar-nav">
+      <header className="container-fluid">
+      <nav className="navbar">
+        {/* Make "Toca Pro" clickable and link to Home */}
+        <NavLink className="navbar-brand" to="/">toca</NavLink>
+          <ul className="nav-links">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/">home</NavLink>
+            </li>
+            {authState === AuthState.Unauthenticated && (
               <li className="nav-item">
-                <NavLink className="nav-link" to="/" exact="true">
-                  Home
-                </NavLink>
+                <NavLink className="nav-link" to="/login">login</NavLink>
               </li>
-              {/* Only show Login link if unauthenticated */}
-              {authState === AuthState.Unauthenticated && (
+            )}
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/about">about</NavLink>
+            </li>
+            {authState === AuthState.Authenticated && (
+              <>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/login">
-                    Login
-                  </NavLink>
+                  <NavLink className="nav-link" to="/myaccount">my account</NavLink>
                 </li>
-              )}
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/about">
-                  About
-                </NavLink>
-              </li>
-              {/* Authenticated-only links */}
-              {authState === AuthState.Authenticated && (
-                <>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/myaccount">
-                      My Account
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/login">
-                      Logout
-                    </NavLink>
-                  </li>
-                </>
-              )}
-            </menu>
-          </nav>
-        </header>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">logout</NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+      </header>
+
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
           <Route
@@ -78,19 +68,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-      <footer className="bg-dark text-white-50">
-        <div className="container-fluid">
-          <span className="text-reset">Toca Pro</span>
-          <a
-            className="text-reset"
-            href="https://github.com/webprogramming260/simon-react"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Source
-          </a>
-        </div>
-      </footer>
     </div>
   );
 }

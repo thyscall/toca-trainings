@@ -38,33 +38,19 @@ export default function About() {
 
       {/* Main Content */}
       <main className="about">
-        <h2>About Toca</h2>
+        <h2><b><i>about toca</i></b></h2>
         <p>
           Each training with Toca is structured to improve technical ability, individual mentality, and personal growth. My
           players will be the first to tell you that I match their commitment: any time, any place, any condition. These are the
           trainings I wish I had early on in my career.
         </p>
 
-        {/* Inspirational Quote Section */}
-        <div className="quote-box">
-          <blockquote className="quote">
-            "Success is no accident. It is hard work, perseverance, learning, studying, sacrifice, and most of all, love of what you are doing or learning to do."
-          </blockquote>
-          <p className="author">- Pele</p>
-        </div>
-
         <p>
           Trainings are tailored to each player's goals, skillset, age, competition level, and schedule. Training sessions are
-          held at Lakeside Sports Park in Orem, UT. See map below for details.
+          held at Lakeside Sports Park in Orem, UT.
         </p>
-        <img
-          src="Images/Lakeside Sports Park Google Maps.png"
-          alt="Lakeside Sports Park"
-          width="650"
-          height="500"
-        />
 
-        <h2>About Me</h2>
+        <h2><b><i>about me</i></b></h2>
         <img src="Images/BYU-54_Original.jpg" alt="Thys Call BYU Soccer" width="400" height="500" />
         <p>
           I started playing soccer at the age of two. I went on to play, watch, and coach soccer almost every day for the next
@@ -72,42 +58,41 @@ export default function About() {
           Young University. I have been fortunate to be surrounded by incredible players and coaches throughout my career.
           I am a lifelong Arsenal fan and enjoy keeping up with all of the top leagues across the world, especially the Premier League. 
         </p>
-        <h2>Premier League Table</h2>
-        {loading && <p>Loading standings...</p>}
-        {error && <p style={{ color: "red" }}>Error: {error}</p>}
-        {!loading && !error && leagueTable.length > 0 && (
-          <table className="league-table">
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Team</th>
-                <th>Played</th>
-                <th>Points</th>
-                <th>Goal Difference</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leagueTable.map((team) => (
-                <tr key={team.team.id}>
-                  <td>{team.position}</td>
-                  <td>
-                    <img
-                      src={team.team.crest}
-                      alt={team.team.name}
-                      width="30"
-                      height="30"
-                      style={{ marginRight: "10px" }}
-                    />
-                    {team.team.name}
-                  </td>
-                  <td>{team.playedGames}</td>
-                  <td>{team.points}</td>
-                  <td>{team.goalDifference}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+        <h2><b><i>premier league table</i></b></h2>
+{loading && <p>Loading standings...</p>}
+{error && <p style={{ color: "red" }}>Error: {error}</p>}
+{!loading && !error && leagueTable.length > 0 && (
+    <table className="league-table">
+    <thead>
+      <tr>
+        <th className="position-column">Position</th>
+        <th className="team-column">Team</th>
+        <th className="played-column">Played</th>
+        <th className="points-column">Points</th>
+        <th className="goal-diff-column">Goal Difference</th>
+      </tr>
+    </thead>
+    <tbody>
+      {leagueTable.map((team) => (
+        <tr key={team.team.id}>
+          <td className="position-column">{team.position}</td>
+          <td className="team-column">
+            <div className="team-info">
+              <img src={team.team.crest} alt={team.team.name} className="team-logo" />
+              <span className="team-name">{team.team.name}</span>
+            </div>
+          </td>
+          <td className="played-column">{team.playedGames}</td>
+          <td className="points-column">{team.points}</td>
+          <td className="goal-diff-column">{team.goalDifference}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+
+)}
+
       </main>
 
       {/* Footer */}
