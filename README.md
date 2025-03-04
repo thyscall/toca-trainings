@@ -1,41 +1,36 @@
 # web-startup
 
 ### Elevator Pitch
-I started training youth soccer players almost four years ago. I am excited to legitimize this business while strengthening the visibility that my players have on their growth. This website will be a platform where they can own their training progress in their accounts and have access to resources to help with the mental aspect of the beautiful game.
+I started training youth soccer players almost four years ago. I am excited to legitimize this business while strengthening the visibility that my players have on their growth. This website is in the process of becoming a platform where players can own their training progress in their accounts and have access to resources to help with the mental aspect of the beautiful game.
 
 ### Key Features
 - Secure login over HTTPS
-- Account creation and overview
-- Schedule of available training session times
+- Account creation and authentication
 - Customize training content and length 
-- Schedule and reserve trainings online
 - Display training types and details
 - View training session feedback in user account
-- Web pages: Home, FAQs, About Me, User Login/Account
+- Web pages: Home, About Me, User Login & Account
 
 
 
 ### Use of Technology
-- [ ] HTML - Uses HTML for four pages:
+- [X] HTML - Uses HTML for four pages:
   1. Home 
   2. Login 
   3. My Training History
   4. About Me 
 
 - [X] CSS - Application styles that are adaptable to desktop and mobile devices, follow good UX design principles, and emphasize value of website.
-- [ ] JavaScript: Interactive menu for FAQ page and training schedule.
-- [ ] React - Provides login, training schedule, training customization, and display trainer feedback.
+- [ ] JavaScript – UI, interactivity, data authentication
+- [ ] React - Provides login and display trainer feedback.
 - [ ] Web Service - Backend service for:
   - user login
-  - reserved trainings
   - display trainer feedback
 - [ ] Authentication - User account creation and identification
 - [ ] Database Data/Login - Store the following information: 
-  - user/player information (Name, email, phone, age)
+  - user/player information (Name, email, age)
   - training date
   - performance evaluation 
-- [ ] WebSocket Data - As a user books a training, it is added to their upcoming trainings
-  - coaching feedback 
 - [ ] WebSocket Data - As a user completes a training, it is added to their training history
 
 
