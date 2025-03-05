@@ -53,7 +53,7 @@ export default function Home() {
         <img src="Images/UtahUnited.jpg" alt="Utah United" width="75" height="75"/>
         <img src="Images/BYUSoccer.jpg" alt="BYU Soccer" width="150" height="150"/>
         <img src="Images/UVU.png" alt="UVU Soccer" width="75" height="75"/>
-        <img src="Images/SLCC.jpeg" alt="SLCC Soccer" width="100" height="90"/>
+        <img src="Images/SLCC.jpeg" alt="SLCC Soccer" width="75" height="68"/>
         <img src="Images/SVU.png" alt="SVU Soccer" width="75" height="75"/>
         <img src="Images/Utah Celtic FC.png" alt="Utah Celtic Soccer" width="75" height="75"/>
         <img src="Images/LaRoca.png" alt="La Roca Futbol Club" width="75" height="75"/>

@@ -67,7 +67,7 @@ header {
 /* Global Background for All Pages */
 body {
   font-family: 'Helvetica', sans-serif;
-  background: linear-gradient(180deg, #ffffff, #d3d3d3); 
+  background: white; 
   color: black;
   margin: 0;
   padding: 0;
@@ -129,7 +129,7 @@ a:hover {
 .button:hover {
   background-color: white;
   color: #39a95e;
-  transform: scale(1.05); /* Slight zoom effect */
+  transform: scale(1.05); 
 }
 
 
@@ -141,8 +141,8 @@ a:hover {
   }
 
   .nav-links {
-    flex-direction: row;  /* Ensures menu stays in a row on mobile */
-    justify-content: center;  /* Centers items on smaller screens */
+    flex-direction: row;  
+    justify-content: center; 
     gap: 15px;
   }
 }
